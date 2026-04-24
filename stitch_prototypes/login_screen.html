@@ -1,0 +1,219 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#f8ddd2",
+            "on-tertiary-fixed-variant": "#00497b",
+            "surface": "#fff8f6",
+            "surface-bright": "#fff8f6",
+            "on-tertiary-container": "#003357",
+            "secondary-container": "#a0f399",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#001d35",
+            "on-primary-container": "#572000",
+            "tertiary": "#0062a1",
+            "tertiary-fixed": "#d0e4ff",
+            "primary-fixed-dim": "#ffb693",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "secondary": "#1b6d24",
+            "surface-variant": "#f8ddd2",
+            "primary": "#a04100",
+            "outline-variant": "#e2bfb0",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#fff1eb",
+            "surface-container": "#ffeae1",
+            "on-surface": "#261812",
+            "on-surface-variant": "#5a4136",
+            "secondary-fixed-dim": "#88d982",
+            "outline": "#8e7164",
+            "tertiary-container": "#059eff",
+            "surface-dim": "#efd5ca",
+            "on-secondary-container": "#217128",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "on-background": "#261812",
+            "inverse-primary": "#ffb693",
+            "surface-tint": "#a04100",
+            "on-secondary-fixed-variant": "#005312",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#ffdbcc",
+            "tertiary-fixed-dim": "#9ccaff",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#351000",
+            "background": "#fff8f6",
+            "surface-container-high": "#fee3d8",
+            "on-primary-fixed-variant": "#7a3000",
+            "inverse-on-surface": "#ffede6",
+            "secondary-fixed": "#a3f69c",
+            "primary-container": "#ff6b00",
+            "on-secondary-fixed": "#002204",
+            "inverse-surface": "#3d2d26"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "md": "24px",
+            "lg": "48px",
+            "xl": "80px",
+            "base": "8px",
+            "gutter": "24px",
+            "container-max": "1200px",
+            "xs": "4px",
+            "sm": "12px"
+          },
+          "fontFamily": {
+            "label-sm": ["Be Vietnam Pro"],
+            "h1": ["Noto Serif"],
+            "h2": ["Noto Serif"],
+            "body-md": ["Be Vietnam Pro"],
+            "body-lg": ["Be Vietnam Pro"],
+            "h3": ["Noto Serif"]
+          },
+          "fontSize": {
+            "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+            "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-shadow-card {
+      box-shadow: 0 30px 60px -12px rgba(28, 28, 28, 0.04);
+    }
+    .custom-shadow-accent {
+      box-shadow: 0 20px 40px -8px rgba(255, 107, 0, 0.15);
+    }
+    .bg-saffron-gradient {
+      background: linear-gradient(135deg, #ff6b00 0%, #a04100 100%);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+<!-- Left Section: Visual Narrative (Hidden on mobile for focus) -->
+<aside class="hidden md:flex md:w-1/2 lg:w-3/5 relative h-screen overflow-hidden">
+<img alt="Gourmet salad" class="absolute inset-0 w-full h-full object-cover" data-alt="top-down shot of a gourmet roasted vegetable bowl with micro-greens, citrus segments, and edible flowers on a ceramic plate, soft natural window light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrXJARn6L4xUeJ7eC886fDT306Funyg10s2HGEyXOrqOfbPJQNWAdCWR3EKnNkchoT0vaTAH_UFWIsG2qiJqqbk59N_SYbDyjuB-8tyCaH069v5KJT6nf_iHVDN5TZu_fm3azwwiFds6d42Ubvp7N6Thgba84PxO2EAI0rUhqur9Mj2JCowO5g4fewuDvMbDJeQa4KQb1bsdzG_iGuC_LSLjKjH_5DUZiTinoW0xzOCS_tfuGl6ozL2mGnBRS2X_WrSJk802-Uyeuh" style="">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+<div class="absolute bottom-xl left-xl right-xl">
+<div class="flex items-center gap-sm mb-base">
+<div class="w-12 h-[1px] bg-primary-fixed"></div>
+<span class="font-h3 text-primary-fixed italic tracking-widest uppercase text-label-sm" style="">Pure flavors, conscious soul</span>
+</div>
+<h1 class="font-h1 text-h1 text-white mb-md leading-tight" style="">Elevating the Art of <span class="italic font-normal" style="">Pure Vegetarian</span> Dining.</h1>
+<p class="font-body-lg text-body-lg text-white/80 max-w-lg" style="">Sattva is where ancient culinary wisdom meets modern luxury, celebrating the vibrancy of nature's finest harvests.</p>
+</div>
+</aside>
+<!-- Right Section: Login Interface -->
+<main class="flex-1 flex flex-col justify-center items-center px-gutter py-xl md:px-lg">
+<div class="w-full max-w-[420px] space-y-lg">
+<!-- Logo & Identity -->
+<header class="text-center md:text-left">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-h2 font-h2 text-primary tracking-tighter mb-xs italic" style="">RK Restaurant</span>
+<p class="font-label-sm text-label-sm text-outline tracking-widest uppercase" style="">Pure flavors, conscious soul</p>
+</div>
+</header>
+<!-- Content Area -->
+<div class="bg-surface-container-lowest custom-shadow-card p-md md:p-lg rounded-[32px] border border-surface-container">
+<form class="space-y-md">
+<!-- Input Groups -->
+<div class="space-y-base">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="identity" style="">Email or Phone Number</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b-2 border-surface-container focus:border-primary-container focus:ring-0 px-4 py-4 rounded-t-xl transition-all font-body-md text-on-surface outline-none" id="identity" placeholder="Enter your registered contact" type="text">
+<div class="absolute inset-0 rounded-t-xl pointer-events-none ring-1 ring-inset ring-surface-container-highest/20"></div>
+</div>
+</div>
+<div class="space-y-base">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="password" style="">Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b-2 border-surface-container focus:border-primary-container focus:ring-0 px-4 py-4 rounded-t-xl transition-all font-body-md text-on-surface outline-none" id="password" placeholder="••••••••" type="password">
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-outline cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="">visibility</span>
+</div>
+</div>
+<div class="flex justify-end">
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors tracking-normal normal-case italic" href="#" style="">Forgot Password?</a>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-saffron-gradient text-white font-body-md font-semibold py-4 rounded-full custom-shadow-accent hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit" style="">
+<span class="" style="">Login to Sanctuary</span>
+<span class="material-symbols-outlined text-[18px]" style="">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center py-lg">
+<div class="flex-grow border-t border-surface-container"></div>
+<span class="flex-shrink mx-4 font-label-sm text-label-sm text-outline uppercase tracking-tighter" style="">Harmony via</span>
+<div class="flex-grow border-t border-surface-container"></div>
+</div>
+<!-- Social Login -->
+<div class="grid grid-cols-2 gap-md">
+<button class="flex items-center justify-center gap-2 py-3 px-4 border-[0.5px] border-outline-variant rounded-full hover:bg-surface-container-low transition-colors" style="">
+<svg class="w-5 h-5" viewBox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-sm text-label-sm text-on-surface" style="">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-3 px-4 border-[0.5px] border-outline-variant rounded-full hover:bg-surface-container-low transition-colors" style="">
+<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+<path d="M17.05 20.28c-.96.95-2.04 1.72-3.23 1.72-1.16 0-1.54-.71-2.92-.71-1.39 0-1.83.7-2.92.71-1.18 0-2.31-.81-3.32-1.85-2.05-2.12-3.14-5.99-3.14-8.38 0-3.66 2.37-5.59 4.63-5.59 1.18 0 2.14.71 2.86.71.72 0 1.83-.79 3.19-.79 1.43 0 2.53.51 3.31 1.4-2.82 1.41-2.38 5.34.42 6.43-.65 1.58-1.57 3.08-2.88 5.05zm-3.05-15.77c0 1.68-1.37 3.03-3.04 3.03-.02-1.87 1.6-3.48 3.04-3.51.01.16.02.32.02.48z"></path>
+</svg>
+<span class="font-label-sm text-label-sm text-on-surface" style="">Apple</span>
+</button>
+</div>
+</div>
+<!-- Footer Action -->
+<footer class="text-center">
+<p class="font-body-md text-on-surface-variant" style="">
+          New to the journey? 
+          <a class="text-primary font-semibold hover:underline decoration-primary/30 underline-offset-4 ml-1" href="#" style="">Create an Account</a>
+</p>
+</footer>
+</div>
+</main>
+<!-- Contextual Floating Elements -->
+<div class="fixed top-md right-md z-10 hidden md:block">
+<div class="bg-surface-container-lowest/80 backdrop-blur-md px-4 py-2 rounded-full border border-primary/10 flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary flex items-center justify-center">
+<div class="w-1 h-1 rounded-full bg-white"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase" style="">Pure Veg Certified</span>
+</div>
+</div>
+<!-- Mobile Background Decor -->
+<div class="md:hidden absolute top-0 left-0 w-full h-[353px] z-[-1] overflow-hidden">
+<img alt="Vibrant vegetarian salad" class="w-full h-full object-cover" data-alt="Close up of a vibrant vegetarian buddha bowl with avocado, pomegranate seeds and roasted chickpeas on a light stone background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDboyg_xWvjyH6MOzXz7C92Q1IIiahcgPnL8RL5G5wVDa8FefjXV4BYvTHUfPGJjeB3viebgJnxoG-a88rQ943VHmmcKbsLTE5haHrnCIP3K_jBXUNNytgiqShPwZOENzzQMeTkPQ5tOHgpWKM3u7_cDgnm_Z9adwquC-339A5pTwJLsWZFQa8R9i8f5p8N7tSAolqZe4cPo4fpy9ViwgoBlQSWnJDLhech3pM8tSB_4KdNTSnlgxWOFs3PbhmcdTsRxvVGxWRlmuJO" style="">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+</div>
+</body></html>

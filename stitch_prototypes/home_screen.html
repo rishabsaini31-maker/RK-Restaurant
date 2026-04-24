@@ -1,0 +1,339 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sattva Dining | Elevated Purity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#3d2d26",
+                    "surface-tint": "#a04100",
+                    "primary-fixed": "#ffdbcc",
+                    "on-tertiary-container": "#003357",
+                    "on-surface-variant": "#5a4136",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#059eff",
+                    "tertiary": "#0062a1",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#9ccaff",
+                    "background": "#fff8f6",
+                    "error": "#ba1a1a",
+                    "surface-container": "#ffeae1",
+                    "on-primary": "#ffffff",
+                    "primary": "#a04100",
+                    "on-secondary-fixed": "#002204",
+                    "surface-container-high": "#fee3d8",
+                    "on-primary-container": "#572000",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#ffede6",
+                    "primary-container": "#ff6b00",
+                    "surface-dim": "#efd5ca",
+                    "on-surface": "#261812",
+                    "secondary": "#1b6d24",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#ffb693",
+                    "on-secondary-container": "#217128",
+                    "secondary-container": "#a0f399",
+                    "on-tertiary-fixed-variant": "#00497b",
+                    "on-background": "#261812",
+                    "secondary-fixed": "#a3f69c",
+                    "on-tertiary-fixed": "#001d35",
+                    "surface-variant": "#f8ddd2",
+                    "outline-variant": "#e2bfb0",
+                    "surface-container-low": "#fff1eb",
+                    "tertiary-fixed": "#d0e4ff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#351000",
+                    "on-primary-fixed-variant": "#7a3000",
+                    "surface-container-highest": "#f8ddd2",
+                    "secondary-fixed-dim": "#88d982",
+                    "surface": "#fff8f6",
+                    "on-secondary-fixed-variant": "#005312",
+                    "surface-bright": "#fff8f6",
+                    "primary-fixed-dim": "#ffb693",
+                    "outline": "#8e7164"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "48px",
+                    "xl": "80px",
+                    "container-max": "1200px",
+                    "md": "24px",
+                    "base": "8px",
+                    "sm": "12px",
+                    "xs": "4px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "h1": ["Noto Serif"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "h3": ["Noto Serif"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "h2": ["Noto Serif"]
+            },
+            "fontSize": {
+                    "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .veg-badge {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #1b6d24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+        }
+        .veg-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #1b6d24;
+            border-radius: 50%;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-[884px] pb-32" data-stitch-vh="min-h-[884px]===min-h-screen" data-mode="connect">
+<!-- TopAppBar -->
+<header class="fixed w-full top-0 z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-xl shadow-sm dark:shadow-none h-20 px-6 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400" data-icon="eco">eco</span>
+<h1 class="text-2xl font-serif font-bold text-orange-600 dark:text-orange-400">RK Restaurant</h1>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-xl">
+<a class="text-orange-600 dark:text-orange-400 font-bold font-serif text-lg tracking-tight hover:opacity-70 transition-opacity" href="#">Explore</a>
+<a class="text-stone-500 dark:text-stone-400 font-serif text-lg tracking-tight hover:opacity-70 transition-opacity" href="#">Menu</a>
+<a class="text-stone-500 dark:text-stone-400 font-serif text-lg tracking-tight hover:opacity-70 transition-opacity" href="#">Orders</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close-up studio portrait of a person with friendly expression, soft lighting, professional clean photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApwzj6zBjOZx3rPs2zkvY1Mq-26zKeoHYjPM-9_VBw2_27jlkQiMSqryI0c8k0YXiQ246gFBW14KR5SDghz3TcZDHcHQ-vfT8dSlwNdp4MmCo-UVHMoeZFgrq7UYNPnsLsWQamy8TyQuiz_lmODcBbvtTS6gPzOl2y9GakKZQK8shGX7qp-hzTz8Tid71WhgwyOe4pBCBcZ7SD4-tie2vz0bQpmVEUw9tS93DEDkw2O9NerAozT8WYLI3lgzO5MHzv0VM7e8RR1u28">
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 md:px-lg max-w-screen-xl mx-auto">
+<!-- Search & Hero Section -->
+<section class="py-xl flex flex-col items-center text-center">
+<div class="mb-8 w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500">
+<img alt="Premium Vegetarian Cuisine" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoioOjlsIuOoX3Xo1ldyEwYrrg1RpZxenPgSYxlJO-FLdovbIdW2XEtGQ7zO_T4a_Yswctd-t7iOEiLXDdW8DhdibBKaxu2jbnUKSiuvCUPeKAdxtEHMR2dURTOTGgz8XmnVelhvgbMM2j0LcMGnSiai_7XOAT9-1-vZqANxYjwwwf_oc0Mu1Eu3KKImVBCJWHNOQmdmUP25IaZIAWUkR0ue3r2EJxkvk701USQZHE7n9zynnESDZzxDCqVpShBkznSShEmoJF3sYF">
+</div><h2 class="font-h1 text-h1 text-on-surface mb-md">Pure flavors, conscious soul.</h2>
+<div class="w-full max-w-2xl relative">
+<input class="w-full h-16 bg-surface-container-lowest rounded-full px-12 border-none shadow-[0_10px_40px_rgba(0,0,0,0.04)] focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg transition-all placeholder:text-outline" placeholder="Search for artisanal vegetarian delicacies..." type="text">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+</div>
+</section>
+<!-- Categories -->
+<section class="mb-xl overflow-x-auto no-scrollbar">
+<div class="flex gap-md pb-4">
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-primary-container text-on-primary font-label-sm border border-primary-container active:scale-95 transition-transform">Pure Veg</button>
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container transition-colors active:scale-95 transition-transform">Jain Food</button>
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container transition-colors active:scale-95 transition-transform">South Indian</button>
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container transition-colors active:scale-95 transition-transform">North Indian</button>
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container transition-colors active:scale-95 transition-transform">Snacks</button>
+<button class="flex-shrink-0 px-6 py-3 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container transition-colors active:scale-95 transition-transform">Beverages</button>
+</div>
+</section>
+<!-- Heritage Stories (Visual Highlight) -->
+<section class="mb-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md h-[400px]">
+<div class="relative overflow-hidden rounded-[20px] bg-surface-container-high group">
+<img alt="Fresh Ingredients" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close-up of fresh green organic vegetables and herbs on a rustic wooden table with soft morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8JTSATGxYKOBdHMK71PoM9Gg8A58Mhi_0DAR6h91QRLiZMLHxIaY93vUXAgvPCVjC-Q2aypV2MR_c0Z2U-6AAMaCvIAk3KAXPWAgJ7rjJfpbZd_VpbN5vJaJRyqd-EZ-CKu3g-7Yrt3dS5mg9ges09E_E8P1IwxHdRqmKuGWxgOkAip7zFC-8KpVA86Dv1d95JIMqC1KVrD_JXHgEZGJ_r53Bk1Eu8pP566vKtkHJvb7PBKOrgIBgJUrFwf3jOHI37hk1ilqpU2_J">
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 to-transparent"></div>
+<div class="absolute bottom-8 left-8 text-white">
+<span class="font-label-sm text-[10px] uppercase tracking-[0.2em] mb-xs block">Heritage Stories</span>
+<h3 class="font-h2 text-h3 mb-base">The Art of Cold-Pressed Saffron</h3>
+<p class="font-body-md opacity-90 max-w-sm">Discover how we source our world-class Kesari from the valleys of Pampore.</p>
+</div>
+</div>
+<div class="hidden md:flex flex-col gap-md">
+<div class="h-1/2 bg-secondary-container rounded-[20px] p-8 flex items-center justify-between">
+<div>
+<h3 class="font-h3 text-on-secondary-container mb-base text-h3">Seasonal Harvest</h3>
+<p class="text-on-secondary-container/80 max-w-xs">Summer specials featuring organic Alphonso mangoes and mint.</p>
+</div>
+<span class="material-symbols-outlined text-5xl text-on-secondary-container opacity-20" data-icon="potted_plant">potted_plant</span>
+</div>
+<div class="h-1/2 bg-primary-container/10 rounded-[20px] p-8 flex items-center justify-between border border-primary-container/20">
+<div>
+<h3 class="font-h3 text-primary mb-base text-h3">Chef's Table</h3>
+<p class="text-on-surface-variant max-w-xs italic font-serif">"Cooking is a form of prayer." — Executive Chef Aditi</p>
+</div>
+<span class="material-symbols-outlined text-5xl text-primary opacity-20" data-icon="restaurant">restaurant</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Restaurant Grid -->
+<section class="mb-xl">
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-h2 text-h2">Chef's Signature Specials</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Dish 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-outline-variant hover:shadow-md transition-shadow group">
+<div class="w-full aspect-square rounded-lg overflow-hidden mb-4">
+<img alt="Paneer Butter Masala" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKyv0k8scgq3RdqEXnJKref2gvS4kinF0ZsCxkMvebvIr4PEmyQtHoX0Zlc2m78YaYgMhEX_BsskO9Oa5fxbe3qMVfkEQrXDtxUGK4WDIpOhgHW7t16UW1JXQsAtmQs4bLnfwYXt_q5wWZ_dOOCUiSI4Z9jKzRShBRq9N8BKpuQuqNXN2G4ZXRs_hckmdGSpg24B91oTxGHFhtEf68ZzHfECuVtX7WpYctdegrXWDwUlpkwMGWiv8YuaSaEVeIURfLK13D9YGU21T">
+</div>
+<h4 class="font-bold text-on-surface mb-1">Paneer Butter Masala</h4>
+<p class="text-xs text-on-surface-variant mb-3 line-clamp-1">Creamy tomato gravy with fresh cottage cheese</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">$14.50</span>
+<button class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-sm">add</span></button>
+</div>
+</div>
+<!-- Dish 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-outline-variant hover:shadow-md transition-shadow group">
+<div class="w-full aspect-square rounded-lg overflow-hidden mb-4">
+<img alt="Dal Makhani" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoioOjlsIuOoX3Xo1ldyEwYrrg1RpZxenPgSYxlJO-FLdovbIdW2XEtGQ7zO_T4a_Yswctd-t7iOEiLXDdW8DhdibBKaxu2jbnUKSiuvCUPeKAdxtEHMR2dURTOTGgz8XmnVelhvgbMM2j0LcMGnSiai_7XOAT9-1-vZqANxYjwwwf_oc0Mu1Eu3KKImVBCJWHNOQmdmUP25IaZIAWUkR0ue3r2EJxkvk701USQZHE7n9zynnESDZzxDCqVpShBkznSShEmoJF3sYF">
+</div>
+<h4 class="font-bold text-on-surface mb-1">Dal Makhani</h4>
+<p class="text-xs text-on-surface-variant mb-3 line-clamp-1">Slow-cooked black lentils with white butter</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">$12.00</span>
+<button class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-sm">add</span></button>
+</div>
+</div>
+<!-- Dish 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-outline-variant hover:shadow-md transition-shadow group">
+<div class="w-full aspect-square rounded-lg overflow-hidden mb-4">
+<img alt="Garlic Naan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6QF3gepZjvQWbybjYkMBuK4gjuVVB03XClbAPZ1xFWE0hzJbh39hAuTz4AqgjUfSYcT8y3bgOsHYQNwHexzVI36eKNcH38r-yQQLG9iCgLHGPhJsBTAd98lmObYC3kaUxR-cZrMhy6vvxgK2GGCFTQG7_F2vtwRB4Bm42lIZGRSJQvkh6q6sEd1ucib2qVDNObxcevSgxcLe4ZulIS61ePYFc0by9QW8DRJl-GoGZuZzADaqPy4OQYW8GgRhl1vcBhzE6Ss-zsMJh">
+</div>
+<h4 class="font-bold text-on-surface mb-1">Garlic Naan</h4>
+<p class="text-xs text-on-surface-variant mb-3 line-clamp-1">Traditional leavened bread with roasted garlic</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">$4.50</span>
+<button class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-sm">add</span></button>
+</div>
+</div>
+<!-- Dish 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-outline-variant hover:shadow-md transition-shadow group">
+<div class="w-full aspect-square rounded-lg overflow-hidden mb-4">
+<img alt="Spiced Buttermilk" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8JTSATGxYKOBdHMK71PoM9Gg8A58Mhi_0DAR6h91QRLiZMLHxIaY93vUXAgvPCVjC-Q2aypV2MR_c0Z2U-6AAMaCvIAk3KAXPWAgJ7rjJfpbZd_VpbN5vJaJRyqd-EZ-CKu3g-7Yrt3dS5mg9ges09E_E8P1IwxHdRqmKuGWxgOkAip7zFC-8KpVA86Dv1d95JIMqC1KVrD_JXHgEZGJ_r53Bk1Eu8pP566vKtkHJvb7PBKOrgIBgJUrFwf3jOHI37hk1ilqpU2_J">
+</div>
+<h4 class="font-bold text-on-surface mb-1">Spiced Buttermilk</h4>
+<p class="text-xs text-on-surface-variant mb-3 line-clamp-1">Refreshing yogurt drink with roasted cumin</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">$3.50</span>
+<button class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-sm">add</span></button>
+</div>
+</div>
+</div>
+</section><section class="">
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-h2 text-h2">Curated for You</h2>
+<button class="text-primary font-label-sm flex items-center gap-1 hover:opacity-70 transition-opacity">
+                    View All <span class="material-symbols-outlined text-base" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-[0_30px_60px_rgba(28,28,28,0.04)] group">
+<div class="h-64 relative overflow-hidden">
+<img alt="The Lotus Petal" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Exquisite plating of Indian fusion cuisine on a dark ceramic plate with microgreens and edible flowers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKyv0k8scgq3RdqEXnJKref2gvS4kinF0ZsCxkMvebvIr4PEmyQtHoX0Zlc2m78YaYgMhEX_BsskO9Oa5fxbe3qMVfkEQrXDtxUGK4WDIpOhgHW7t16UW1JXQsAtmQs4bLnfwYXt_q5wWZ_dOOCUiSI4Z9jKzRShBRq9N8BKpuQuqNXN2G4ZXRs_hckmdGSpg24B91oTxGHFhtEf68ZzHfECuVtX7WpYctdegrXWDwUlpkwMGWiv8YuaSaEVeIURfLK13D9YGU21T">
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface font-label-sm">4.8</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="veg-badge"><div class="veg-dot"></div></div>
+<h3 class="font-h3 text-h3 text-on-surface">The Lotus Petal</h3>
+</div>
+<p class="text-on-surface-variant font-body-md mb-6 italic font-serif">Artisan Vedic Cuisine</p>
+<button class="w-full bg-primary-container text-on-primary font-label-sm py-4 rounded-full shadow-[0_40px_80px_rgba(255,107,0,0.08)] active:scale-[0.98] transition-all">View Menu</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-[0_30px_60px_rgba(28,28,28,0.04)] group">
+<div class="h-64 relative overflow-hidden">
+<img alt="Green Earth Cafe" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Vibrant healthy buddha bowl with avocado, quinoa, and roasted vegetables in a minimalist white kitchen setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6QF3gepZjvQWbybjYkMBuK4gjuVVB03XClbAPZ1xFWE0hzJbh39hAuTz4AqgjUfSYcT8y3bgOsHYQNwHexzVI36eKNcH38r-yQQLG9iCgLHGPhJsBTAd98lmObYC3kaUxR-cZrMhy6vvxgK2GGCFTQG7_F2vtwRB4Bm42lIZGRSJQvkh6q6sEd1ucib2qVDNObxcevSgxcLe4ZulIS61ePYFc0by9QW8DRJl-GoGZuZzADaqPy4OQYW8GgRhl1vcBhzE6Ss-zsMJh">
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface font-label-sm">4.6</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="veg-badge"><div class="veg-dot"></div></div>
+<h3 class="font-h3 text-h3 text-on-surface">Green Earth Cafe</h3>
+</div>
+<p class="text-on-surface-variant font-body-md mb-6 italic font-serif">Modern Wholesome Bowls</p>
+<button class="w-full bg-primary-container text-on-primary font-label-sm py-4 rounded-full shadow-[0_40px_80px_rgba(255,107,0,0.08)] active:scale-[0.98] transition-all">View Menu</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-[20px] overflow-hidden shadow-[0_30px_60px_rgba(28,28,28,0.04)] group">
+<div class="h-64 relative overflow-hidden">
+<img alt="Temple Flavors" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Traditional South Indian thali served on a banana leaf with various colorful curries and rice" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoioOjlsIuOoX3Xo1ldyEwYrrg1RpZxenPgSYxlJO-FLdovbIdW2XEtGQ7zO_T4a_Yswctd-t7iOEiLXDdW8DhdibBKaxu2jbnUKSiuvCUPeKAdxtEHMR2dURTOTGgz8XmnVelhvgbMM2j0LcMGnSiai_7XOAT9-1-vZqANxYjwwwf_oc0Mu1Eu3KKImVBCJWHNOQmdmUP25IaZIAWUkR0ue3r2EJxkvk701USQZHE7n9zynnESDZzxDCqVpShBkznSShEmoJF3sYF">
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface font-label-sm">4.9</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="veg-badge"><div class="veg-dot"></div></div>
+<h3 class="font-h3 text-h3 text-on-surface">Temple Flavors</h3>
+</div>
+<p class="text-on-surface-variant font-body-md mb-6 italic font-serif">Sacred Satvik Recipes</p>
+<button class="w-full bg-primary-container text-on-primary font-label-sm py-4 rounded-full shadow-[0_40px_80px_rgba(255,107,0,0.08)] active:scale-[0.98] transition-all">View Menu</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 h-24 pb-6 bg-stone-50/90 dark:bg-stone-900/90 backdrop-blur-lg border-t border-stone-100 dark:border-stone-800 shadow-[0_-10px_40px_rgba(0,0,0,0.04)] rounded-t-[32px]">
+<div class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-2xl px-5 py-2.5 transition-all">
+<span class="material-symbols-outlined" data-icon="restaurant" data-weight="fill" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<span class="font-serif text-[10px] uppercase tracking-widest font-medium mt-1">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-5 py-2.5 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-serif text-[10px] uppercase tracking-widest font-medium mt-1">Menu</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-5 py-2.5 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-serif text-[10px] uppercase tracking-widest font-medium mt-1">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-5 py-2.5 hover:text-orange-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-serif text-[10px] uppercase tracking-widest font-medium mt-1">Profile</span>
+</div>
+</footer>
+</body></html>

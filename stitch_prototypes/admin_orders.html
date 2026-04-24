@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#059eff",
+                    "surface-variant": "#f8ddd2",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#217128",
+                    "on-surface-variant": "#5a4136",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#fff8f6",
+                    "inverse-surface": "#3d2d26",
+                    "secondary-container": "#a0f399",
+                    "tertiary-fixed": "#d0e4ff",
+                    "tertiary-fixed-dim": "#9ccaff",
+                    "on-background": "#261812",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#002204",
+                    "on-secondary-fixed-variant": "#005312",
+                    "inverse-primary": "#ffb693",
+                    "primary": "#a04100",
+                    "surface-dim": "#efd5ca",
+                    "surface-tint": "#a04100",
+                    "surface-container-high": "#fee3d8",
+                    "on-surface": "#261812",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#fff1eb",
+                    "outline-variant": "#e2bfb0",
+                    "primary-container": "#ff6b00",
+                    "primary-fixed": "#ffdbcc",
+                    "secondary-fixed": "#a3f69c",
+                    "on-tertiary-container": "#003357",
+                    "outline": "#8e7164",
+                    "on-tertiary-fixed-variant": "#00497b",
+                    "on-primary-container": "#572000",
+                    "tertiary": "#0062a1",
+                    "primary-fixed-dim": "#ffb693",
+                    "on-primary-fixed-variant": "#7a3000",
+                    "surface": "#fff8f6",
+                    "on-tertiary-fixed": "#001d35",
+                    "inverse-on-surface": "#ffede6",
+                    "background": "#fff8f6",
+                    "on-primary-fixed": "#351000",
+                    "surface-container": "#ffeae1",
+                    "surface-container-highest": "#f8ddd2",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#88d982",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#1b6d24"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "gutter": "24px",
+                    "xl": "80px",
+                    "md": "24px",
+                    "container-max": "1200px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "lg": "48px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Be Vietnam Pro"],
+                    "h3": ["Noto Serif"],
+                    "h2": ["Noto Serif"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "h1": ["Noto Serif"],
+                    "body-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "h2": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f6;
+        }
+        .order-card-shadow {
+            box-shadow: 0 30px 60px -12px rgba(28, 28, 28, 0.04);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-10 h-20 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-serif font-semibold text-stone-900 dark:text-stone-50">Ethos Admin</span>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border-none rounded-full px-6 py-2 w-64 focus:ring-2 focus:ring-primary-container text-label-sm" placeholder="Search orders..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-2 text-stone-400" data-icon="search">search</span>
+</div>
+<div class="flex items-center space-x-4">
+<button class="cursor-pointer active:scale-95 text-stone-500 hover:text-orange-500 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="cursor-pointer active:scale-95 text-stone-500 hover:text-orange-500 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Administrator profile" class="h-full w-full object-cover" data-alt="Professional headshot of a restaurant administrator in a clean white studio background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0Fe8RhizaIdzMlDo_qFbWeEyABMoSmtsL2cV22KpsTlx32-rkpH9xqp0jVzSVMMRmaVCc20mXanwgx0GjBYXF9gawlFay9aht8cbUgP-E_ehvF8PH9-x-6jAcwi2ksJaR6DQDYlGKBDxrX3rfNBb3nUnABjGPjOglBrx9UYz99jwbSFViVSHZaTLplWuwIv-tCCPSEIfF90GTgjmKarH6VtD1WXdngUiYehm1n7wiUqIlyiIN7WuOa-376Nlx_yLBeuR-uKuHGs92"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-24 pb-8 bg-stone-50 dark:bg-stone-950 border-r border-stone-100 dark:border-stone-900 w-72 z-40">
+<div class="px-8 mb-10">
+<h2 class="text-xl font-serif text-stone-900 dark:text-stone-50">Sattva Dining</h2>
+<p class="text-stone-500 text-label-sm uppercase tracking-widest mt-1">Premium Admin Portal</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center space-x-4 py-4 px-8 text-stone-600 dark:text-stone-400 opacity-70 hover:opacity-100 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-serif text-sm tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center space-x-4 py-4 px-8 text-stone-600 dark:text-stone-400 opacity-70 hover:opacity-100 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-serif text-sm tracking-tight">Menu Management</span>
+</a>
+<a class="flex items-center space-x-4 py-4 px-8 bg-orange-50/50 dark:bg-orange-950/20 text-orange-600 dark:text-orange-400 font-bold border-r-4 border-orange-600 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-serif text-sm tracking-tight">Orders</span>
+</a>
+<a class="flex items-center space-x-4 py-4 px-8 text-stone-600 dark:text-stone-400 opacity-70 hover:opacity-100 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-serif text-sm tracking-tight">Analytics</span>
+</a>
+</nav>
+<div class="px-8">
+<button class="w-full bg-primary-container text-on-primary py-3 rounded-full font-serif text-sm tracking-wide shadow-lg shadow-orange-500/20 active:scale-95 transition-transform">
+                New Menu Item
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pl-72 pt-20 min-h-screen">
+<div class="max-w-7xl mx-auto p-10">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h1 class="font-h1 text-h2 text-on-background mb-2">Order Management</h1>
+<p class="font-body-md text-stone-500">Monitor and manage guest orders in real-time.</p>
+</div>
+<div class="flex space-x-4">
+<div class="bg-white rounded-xl border border-stone-100 p-2 flex space-x-2 shadow-sm">
+<button class="px-4 py-2 rounded-lg bg-orange-50 text-orange-600 text-label-sm font-semibold">Today</button>
+<button class="px-4 py-2 rounded-lg text-stone-500 text-label-sm hover:bg-stone-50 transition-colors">Weekly</button>
+<button class="px-4 py-2 rounded-lg text-stone-500 text-label-sm hover:bg-stone-50 transition-colors">Monthly</button>
+</div>
+</div>
+</div>
+<!-- Filters & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-6 mb-8">
+<div class="flex items-center space-x-4">
+<div class="flex items-center bg-white px-4 py-2.5 rounded-full border border-stone-100 order-card-shadow">
+<span class="material-symbols-outlined text-stone-400 text-sm mr-2" data-icon="filter_list">filter_list</span>
+<span class="text-label-sm text-stone-600 mr-4">Filter by Status:</span>
+<select class="border-none bg-transparent text-label-sm font-bold text-primary focus:ring-0 cursor-pointer">
+<option>All Statuses</option>
+<option>Pending</option>
+<option>Preparing</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</div>
+<div class="flex items-center bg-white px-4 py-2.5 rounded-full border border-stone-100 order-card-shadow">
+<span class="material-symbols-outlined text-stone-400 text-sm mr-2" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm text-stone-600">Oct 24, 2023 - Oct 31, 2023</span>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<button class="flex items-center space-x-2 px-5 py-2.5 rounded-full border border-orange-200 text-primary font-serif text-sm hover:bg-orange-50 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- Orders Table Container -->
+<div class="bg-white rounded-[20px] order-card-shadow overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-stone-50">
+<th class="px-8 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest">Order ID</th>
+<th class="px-6 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest">Customer</th>
+<th class="px-6 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest">Items</th>
+<th class="px-6 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest">Total</th>
+<th class="px-6 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest">Status</th>
+<th class="px-8 py-6 font-serif text-label-sm text-stone-400 uppercase tracking-widest text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-stone-50">
+<!-- Order Row 1 -->
+<tr class="hover:bg-stone-50/50 transition-colors group">
+<td class="px-8 py-6">
+<span class="font-body-md font-bold text-stone-900">#SAT-9021</span>
+<p class="text-[10px] text-stone-400 mt-1">10:45 AM</p>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center">
+<div class="h-9 w-9 rounded-full bg-surface-container-high flex items-center justify-center mr-3 text-primary text-label-sm">EM</div>
+<div>
+<p class="font-serif font-semibold text-stone-800">Eleanor Moore</p>
+<p class="text-label-sm text-stone-400 flex items-center">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="location_on">location_on</span>
+                                            Maple Heights, Villa 42
+                                        </p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden" title="Saffron Infused Risotto">
+<img class="h-full w-full object-cover" data-alt="Close-up of golden saffron risotto in a white ceramic bowl with microgreens garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeV7g2D1Sf_Whe7hxeyicMm3qVp2XiNADJ2a48DNe7B5imjIFM3KduKEWoTWBs0dgz10yHATa-0RPJxmoQ6VpOKb6XYE_bJRbv-Jcae0uH7FTP10KlyNuwW1Q0Gg6iVZWA-A4KqVWrHIhf--6mnzYfU6Sg8BKrz14QrLH-Y1_iC7D7JmPKXjQnwVAfGrWD-ilBoQCQkyDeuLVd6Sl7SqTe7SEcWZHOe4UPH3feHa4hl-7GuyT8MzKljryK_r1E-zpaOrQNbjoRlH7s"/>
+</div>
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden" title="Heritage Tomato Tart">
+<img class="h-full w-full object-cover" data-alt="Artisanal tomato tart with vibrant red and yellow heirloom tomatoes and fresh basil leaves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3nN1VyILWtsBeGfccySYydLomZoHDtksnAQGFpTb0VVkQxsuXRWYcTKPCQ6oCOApEWA3j26VZDLYk7W3W63SeV5cOPPzrmETIeKUCO08slLeQW0jZYgCKnsmDl59YL61acYHoafDrJuUhyS2zzhGNyMC6Msxxq5MWKb0qLZQ_C0PO_psA143IlzzZemOpikrm4997MEhsgQal-04TetvLZMbnL7n8lOptIeuZaKLZF1k3WenxF7qt2OrSbq8JqUUvGfnZsPlHvS2T"/>
+</div>
+<div class="h-8 w-8 rounded-full bg-stone-100 border-2 border-white flex items-center justify-center text-[10px] text-stone-500 font-bold">+1</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="font-serif font-bold text-stone-900">$142.50</span>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-[11px] font-bold uppercase tracking-wider border border-orange-100">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500 mr-2 animate-pulse"></span>
+                                    Preparing
+                                </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg hover:bg-white hover:shadow-sm text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 2 -->
+<tr class="hover:bg-stone-50/50 transition-colors group">
+<td class="px-8 py-6">
+<span class="font-body-md font-bold text-stone-900">#SAT-9022</span>
+<p class="text-[10px] text-stone-400 mt-1">11:15 AM</p>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center">
+<div class="h-9 w-9 rounded-full bg-blue-50 flex items-center justify-center mr-3 text-tertiary text-label-sm">JK</div>
+<div>
+<p class="font-serif font-semibold text-stone-800">Julian Kern</p>
+<p class="text-label-sm text-stone-400 flex items-center">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="location_on">location_on</span>
+                                            Azure Bay Residences, Apt 804
+                                        </p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden" title="Wild Mushroom Consommé">
+<img class="h-full w-full object-cover" data-alt="Clear mushroom consomme served in a luxury glass bowl with floating chive oil droplets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnCOf7TqhOlzmzKWBY42lDH7lU5aghYTZuMQ7UCvgWkRObbUIbcMs7DWY6Y7Peiq7iUg2AxZSSDJcS7lCw4wLr-Gi0LPX8YqExfpTEstCscbSU_NUR4rOEjBPWeYMv018hPSsHJqbQDgdFqyV0axYfKPKx47skT0MPGvC6LCyI9fikwF9vUufcwlbM-Z4fF2tuQr_Bj4Ae2YQPEJHNNE-wfvAcyxyM09oHW-8c4oHV7ziyBHFt7AQ_7foefPlgKvsNG9Tb6s3jOUYQ"/>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="font-serif font-bold text-stone-900">$64.00</span>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-stone-100 text-stone-500 text-[11px] font-bold uppercase tracking-wider border border-stone-200">
+<span class="w-1.5 h-1.5 rounded-full bg-stone-400 mr-2"></span>
+                                    Pending
+                                </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg hover:bg-white hover:shadow-sm text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 3 -->
+<tr class="hover:bg-stone-50/50 transition-colors group">
+<td class="px-8 py-6">
+<span class="font-body-md font-bold text-stone-900">#SAT-8998</span>
+<p class="text-[10px] text-stone-400 mt-1">Yesterday, 8:20 PM</p>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center">
+<div class="h-9 w-9 rounded-full bg-secondary-container flex items-center justify-center mr-3 text-secondary text-label-sm">SW</div>
+<div>
+<p class="font-serif font-semibold text-stone-800">Sarah Williams</p>
+<p class="text-label-sm text-stone-400 flex items-center">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="location_on">location_on</span>
+                                            Old Town, 12 Garden Row
+                                        </p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Fresh organic green salad with avocado and pomegranate seeds on a white plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPNZw2b2ubadugCVPni4dfIxIRY36342vMSuo6VB2jr-Ifm_L7P7y1CaV7NARoM_ID9Ef-AxL_pzyT2gieJWGpMdOitvuSDPyILfHSiHBQTVOZakbXpIuzW-BDp-QNC-aIQM1FvE_QfUAOtMMJioyP3k6wzRsgdNaYM95BOEC-9IYAhL0MAezy75jgbu-Wsb-goQ68UAVVeE70LH5CSDadRxwpneVq52CAOUk1jIndCYhweVYpAYm1V5nlhieG0VMDfbDT6zkiYL1M"/>
+</div>
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Gourmet vegetarian bowl with quinoa, roasted vegetables and tahini dressing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc8wxhahS1RzDcjv6-Cnyybpjr_0YtrBepFscWMjzIyfJb-wk0yVYjYYKrD2SmPApULsohdDB89Q_jn0t2fsc7rsigWNygSsTqqBaVlFQ2W95A3Sy6nBEz0DNN3Ihp79d22_X_jqHUUBTlS3rOQ8l5Ftn6VlMI7-N2DzvOu60aXo4W2xw90SYpqgo1CCmncuK4Gkd731i8XH-eogF5yoSX_SHyIL19Gsmnz3pxH47gLBFNT9DVx2yxniJdaqx2MXkljm-AnXDuTMpm"/>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="font-serif font-bold text-stone-900">$89.20</span>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-[11px] font-bold uppercase tracking-wider border border-secondary-container/50">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span>
+                                    Delivered
+                                </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg hover:bg-white hover:shadow-sm text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 4 -->
+<tr class="hover:bg-stone-50/50 transition-colors group">
+<td class="px-8 py-6">
+<span class="font-body-md font-bold text-stone-900">#SAT-9015</span>
+<p class="text-[10px] text-stone-400 mt-1">9:10 AM</p>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center">
+<div class="h-9 w-9 rounded-full bg-surface-variant flex items-center justify-center mr-3 text-on-surface-variant text-label-sm">RB</div>
+<div>
+<p class="font-serif font-semibold text-stone-800">Robert Brown</p>
+<p class="text-label-sm text-stone-400 flex items-center">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="location_on">location_on</span>
+                                            Grand Plaza Hotel, Suite 1201
+                                        </p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Artisanal lentil soup with roasted garlic oil and fresh cilantro" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeAHGEIyLHY3HBKzc_ZHSivsYAmP7umRE_dIrOnub9vyeAdrAbLMHFYXNLYfpyGRRWebF7ZvSkmllL5zmfLwweS2Zfs2z7ZOgt4EC6rKcKZ6ucwL9vlgTVNyp_ld5oW_hkYfgpvIo7yW826tg9fvNTlLu9EpgzK9ZzZk5bRWx8i_3Cy5yVpfhEpBacu9nMXT5LorpMBub_n2BsyXj2aDC1raibYZK7l1GJTxtfwhQv8OROSgl1OYpc63QkgvkLaZKgur2IgBMEcYOj"/>
+</div>
+<div class="h-8 w-8 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Selection of mini vegetarian appetizers on a slate board" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtFCPkFTn-wu7l2Vszk5LKwagr5Htoc7BxkqDO99kktx5q9Xbt1JMhMSvaEaP3sNcRI84XQv5Fp0CzG9w9wPtcQLINEJTkbHkeDMN6DwkklqWZiaJS44TDCnMAwWB1NKWDHjvbQ0yqEV3Kh2O8ZRa1s0pt6WqsQDWR_yMn7OSTdBVhxjXbl7qLCLskVf0JoGcSYab-ETPySiYJdc31AaXXtR_YAoUvn54Q-pLu6Bhrng6q3NQpy-klyDOjnWGS3ggA9v7kaiRwiwrF"/>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="font-serif font-bold text-stone-900">$118.00</span>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[11px] font-bold uppercase tracking-wider border border-blue-100">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2"></span>
+                                    Out for Delivery
+                                </span>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg hover:bg-white hover:shadow-sm text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-8 py-6 border-t border-stone-50 flex items-center justify-between">
+<p class="text-label-sm text-stone-400">Showing 1 to 4 of 24 entries</p>
+<div class="flex space-x-2">
+<button class="p-2 rounded-lg border border-stone-100 text-stone-400 hover:text-primary transition-all disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-orange-50 text-primary text-label-sm font-bold">1</button>
+<button class="w-8 h-8 rounded-lg text-stone-500 text-label-sm hover:bg-stone-50">2</button>
+<button class="w-8 h-8 rounded-lg text-stone-500 text-label-sm hover:bg-stone-50">3</button>
+<button class="p-2 rounded-lg border border-stone-100 text-stone-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dashboard Stats Summary (Asymmetric Layout Element) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-primary-container p-8 rounded-[24px] text-on-primary flex justify-between items-center relative overflow-hidden">
+<div class="z-10">
+<p class="text-label-sm uppercase tracking-widest opacity-80 mb-2">Revenue Today</p>
+<h3 class="font-h3 text-h2">$3,240.50</h3>
+<p class="text-[10px] mt-4 flex items-center bg-white/20 w-fit px-2 py-1 rounded">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="trending_up">trending_up</span>
+                            +12% from yesterday
+                        </p>
+</div>
+<span class="material-symbols-outlined text-8xl opacity-10 absolute -right-4 -bottom-4" data-icon="payments">payments</span>
+</div>
+<div class="bg-white p-8 rounded-[24px] order-card-shadow flex justify-between items-center border border-stone-50">
+<div>
+<p class="text-label-sm uppercase tracking-widest text-stone-400 mb-2">Active Deliveries</p>
+<h3 class="font-h3 text-h2 text-stone-900">14</h3>
+<div class="flex mt-4 items-center space-x-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-sm text-secondary font-bold">4 Near completion</span>
+</div>
+</div>
+<div class="p-4 rounded-full bg-secondary-container/20 text-secondary">
+<span class="material-symbols-outlined text-3xl" data-icon="moped">moped</span>
+</div>
+</div>
+<div class="bg-stone-900 p-8 rounded-[24px] text-white flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<p class="text-label-sm uppercase tracking-widest opacity-60">Chef's Note</p>
+<span class="material-symbols-outlined text-primary-container" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<p class="font-serif italic text-lg leading-relaxed mt-4">
+                        "High demand for the Saffron Risotto today. Ensure the garnish stock is replenished for the dinner rush."
+                    </p>
+<p class="text-label-sm mt-6 text-stone-400">— Head Chef Arjun</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Detailed Address View (Modal Simulation) -->
+<!-- This would normally be toggled, shown here for design context -->
+<div class="hidden fixed inset-0 z-[60] bg-stone-900/40 backdrop-blur-sm flex items-center justify-center p-6">
+<div class="bg-white rounded-[32px] w-full max-w-lg overflow-hidden order-card-shadow">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover" data-alt="Modern luxury apartment complex with minimalist architecture and manicured green lawns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALTgp9S2bkSs2Nc4stJXCfr9TZxnlA444JWsV7bMiFNk_8PzWduzA3koLcpW7qHxt_l58pOA21oFStPtYqtjusUa7a14Lwdb3d_j1Th3RlnyBsQSEZk_K-jVTvW-kw7T7q8-vBVHh3FOYISc1o0Dv0rOSec0QwVMrRabMxgsXMuyUCYrp2mmac_0dA18prnNYZ-SJRUznDLfXtHvLvomOmT123YK2gvnMYFnDC9nlYMfbejhY8mR-kY4TGUXcA2E6O7yFPShbZTH6E"/>
+<div class="absolute top-4 right-4 h-10 w-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-lg">
+<span class="material-symbols-outlined text-stone-900" data-icon="close">close</span>
+</div>
+</div>
+<div class="p-8">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-h3 text-h3 text-stone-900">Delivery Details</h4>
+<span class="bg-orange-50 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Priority</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-start space-x-4">
+<div class="p-2 bg-stone-50 rounded-lg">
+<span class="material-symbols-outlined text-stone-400" data-icon="location_on">location_on</span>
+</div>
+<div>
+<p class="text-label-sm text-stone-400 uppercase tracking-widest mb-1">Address</p>
+<p class="font-body-md text-stone-800">Villa 42, Maple Heights Estate, Sector 12, Bengaluru - 560067</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="p-2 bg-stone-50 rounded-lg">
+<span class="material-symbols-outlined text-stone-400" data-icon="notes">notes</span>
+</div>
+<div>
+<p class="text-label-sm text-stone-400 uppercase tracking-widest mb-1">Gate Instructions</p>
+<p class="font-body-md text-stone-800">Please leave with the concierge. Gate code: 1289.</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 bg-stone-900 text-white py-4 rounded-full font-serif text-sm tracking-widest active:scale-95 transition-transform">
+                    Contact Driver
+                </button>
+</div>
+</div>
+</div>
+</body></html>
