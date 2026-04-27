@@ -13,28 +13,28 @@ const SPECIALS = [
     id: '1',
     name: 'Paneer Butter Masala',
     desc: 'Creamy tomato gravy with fresh cottage cheese',
-    price: '$14.50',
+    price: '280',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCWKyv0k8scgq3RdqEXnJKref2gvS4kinF0ZsCxkMvebvIr4PEmyQtHoX0Zlc2m78YaYgMhEX_BsskO9Oa5fxbe3qMVfkEQrXDtxUGK4WDIpOhgHW7t16UW1JXQsAtmQs4bLnfwYXt_q5wWZ_dOOCUiSI4Z9jKzRShBRq9N8BKpuQuqNXN2G4ZXRs_hckmdGSpg24B91oTxGHFhtEf68ZzHfECuVtX7WpYctdegrXWDwUlpkwMGWiv8YuaSaEVeIURfLK13D9YGU21T'
   },
   {
     id: '2',
     name: 'Dal Makhani',
     desc: 'Slow-cooked black lentils with white butter',
-    price: '$12.00',
+    price: '₹290',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCoioOjlsIuOoX3Xo1ldyEwYrrg1RpZxenPgSYxlJO-FLdovbIdW2XEtGQ7zO_T4a_Yswctd-t7iOEiLXDdW8DhdibBKaxu2jbnUKSiuvCUPeKAdxtEHMR2dURTOTGgz8XmnVelhvgbMM2j0LcMGnSiai_7XOAT9-1-vZqANxYjwwwf_oc0Mu1Eu3KKImVBCJWHNOQmdmUP25IaZIAWUkR0ue3r2EJxkvk701USQZHE7n9zynnESDZzxDCqVpShBkznSShEmoJF3sYF'
   },
   {
     id: '3',
     name: 'Garlic Naan',
     desc: 'Traditional leavened bread with roasted garlic',
-    price: '$4.50',
+    price: '₹350',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6QF3gepZjvQWbybjYkMBuK4gjuVVB03XClbAPZ1xFWE0hzJbh39hAuTz4AqgjUfSYcT8y3bgOsHYQNwHexzVI36eKNcH38r-yQQLG9iCgLHGPhJsBTAd98lmObYC3kaUxR-cZrMhy6vvxgK2GGCFTQG7_F2vtwRB4Bm42lIZGRSJQvkh6q6sEd1ucib2qVDNObxcevSgxcLe4ZulIS61ePYFc0by9QW8DRJl-GoGZuZzADaqPy4OQYW8GgRhl1vcBhzE6Ss-zsMJh'
   },
   {
     id: '4',
     name: 'Spiced Buttermilk',
     desc: 'Refreshing yogurt drink with roasted cumin',
-    price: '$3.50',
+    price: '₹90',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA8JTSATGxYKOBdHMK71PoM9Gg8A58Mhi_0DAR6h91QRLiZMLHxIaY93vUXAgvPCVjC-Q2aypV2MR_c0Z2U-6AAMaCvIAk3KAXPWAgJ7rjJfpbZd_VpbN5vJaJRyqd-EZ-CKu3g-7Yrt3dS5mg9ges09E_E8P1IwxHdRqmKuGWxgOkAip7zFC-8KpVA86Dv1d95JIMqC1KVrD_JXHgEZGJ_r53Bk1Eu8pP566vKtkHJvb7PBKOrgIBgJUrFwf3jOHI37hk1ilqpU2_J'
   }
 ];
@@ -56,7 +56,7 @@ const CURATED = [
   }
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       {/* Top Header */}
@@ -65,10 +65,12 @@ export default function HomeScreen() {
           <MaterialIcons name="eco" size={28} color={theme.colors.primary} />
           <Text style={styles.headerTitle}>RK Restaurant</Text>
         </View>
-        <Image 
-          source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCw5_Rz8SHwVPExXUpm5pmB8Jhx0NT6r9yrfduOL1IocnycgJ_Jb5gVCAnnLhVXzpra5akp5qKE765vYW2TVQGfvw6Lr2g6hBc7bmI8yZov4D0eM0Z2WKTxMlJUGw_1XgyaVjgQVi7gTWvKPuXZJy4UH2SPFIjwa6ndJrawnvfgibQnbwimnX3lEB2NibLHjs4pO6ARPF9pKfIwP052WS4OPueQUYl6jQAUe8QyQabUEPAD6jHNPvBENxz0XnAIzsdqklaEyHmJ2AWo' }} 
-          style={styles.profileImage} 
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Image 
+            source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCw5_Rz8SHwVPExXUpm5pmB8Jhx0NT6r9yrfduOL1IocnycgJ_Jb5gVCAnnLhVXzpra5akp5qKE765vYW2TVQGfvw6Lr2g6hBc7bmI8yZov4D0eM0Z2WKTxMlJUGw_1XgyaVjgQVi7gTWvKPuXZJy4UH2SPFIjwa6ndJrawnvfgibQnbwimnX3lEB2NibLHjs4pO6ARPF9pKfIwP052WS4OPueQUYl6jQAUe8QyQabUEPAD6jHNPvBENxz0XnAIzsdqklaEyHmJ2AWo' }} 
+            style={styles.profileImage} 
+          />
+        </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
@@ -101,6 +103,7 @@ export default function HomeScreen() {
                 styles.categoryChip, 
                 index === 0 && styles.categoryChipActive
               ]}
+              onPress={() => navigation.navigate('Menu')}
             >
               <Text style={[
                 styles.categoryText,
@@ -136,7 +139,7 @@ export default function HomeScreen() {
                 <Text style={styles.dishDesc} numberOfLines={1}>{dish.desc}</Text>
                 <View style={styles.dishFooter}>
                   <Text style={styles.dishPrice}>{dish.price}</Text>
-                  <TouchableOpacity style={styles.addButton}>
+                  <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Cart')}>
                     <MaterialIcons name="add" size={18} color={theme.colors.onPrimary} />
                   </TouchableOpacity>
                 </View>
@@ -149,7 +152,7 @@ export default function HomeScreen() {
         <View style={styles.sectionContainer}>
           <View style={styles.sectionHeaderRow}>
             <Text style={styles.sectionTitle}>Curated for You</Text>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('Menu')}>
               <Text style={styles.viewAllText}>View All</Text>
               <MaterialIcons name="arrow-forward" size={16} color={theme.colors.primary} />
             </TouchableOpacity>
@@ -170,7 +173,7 @@ export default function HomeScreen() {
                   <Text style={styles.curatedTitle}>{item.name}</Text>
                 </View>
                 <Text style={styles.curatedDesc}>{item.desc}</Text>
-                <TouchableOpacity style={styles.viewMenuBtn}>
+                <TouchableOpacity style={styles.viewMenuBtn} onPress={() => navigation.navigate('Menu')}>
                   <Text style={styles.viewMenuText}>View Menu</Text>
                 </TouchableOpacity>
               </View>

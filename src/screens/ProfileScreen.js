@@ -36,7 +36,7 @@ const ORDERS = [
 ];
 
 export default function ProfileScreen({ navigation }) {
-  const { isLoggedIn, logout } = useAuth();
+  const { user, role, logout } = useAuth();
   
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -73,25 +73,22 @@ export default function ProfileScreen({ navigation }) {
           </View>
           
           <View style={styles.profileDetails}>
-            <Text style={styles.profileName}>Aravind Sharma</Text>
+            <Text style={styles.profileName}>{user ? user.email.split('@')[0] : 'Guest'}</Text>
             <View style={styles.memberStatus}>
               <MaterialIcons name="verified" size={18} color={theme.colors.primary} style={{ marginRight: 4 }} />
-              <Text style={styles.memberText}>Elite Connoisseur Member</Text>
+              <Text style={styles.memberText}>{user ? 'Elite Connoisseur Member' : 'Welcome to our sanctuary'}</Text>
             </View>
             <View style={styles.tagsContainer}>
               <View style={styles.vegTag}>
                 <MaterialIcons name="spa" size={14} color={theme.colors.secondary} style={{ marginRight: 4 }} />
                 <Text style={styles.vegTagText}>Pure Vegetarian</Text>
               </View>
-              <View style={styles.joinTag}>
-                <Text style={styles.joinTagText}>Joined July 2023</Text>
-              </View>
             </View>
           </View>
         </View>
 
         {/* Auth Action Buttons or Logout */}
-        {!isLoggedIn ? (
+        {!user ? (
           <View style={styles.authButtonsContainer}>
             <TouchableOpacity 
               style={[styles.authButton, styles.loginButton]}
@@ -110,9 +107,8 @@ export default function ProfileScreen({ navigation }) {
           <View style={styles.authButtonsContainer}>
             <TouchableOpacity 
               style={[styles.authButton, styles.signupButton]} // re-use outlined style for logout
-              onPress={() => {
-                logout();
-                navigation.navigate('Login');
+              onPress={async () => {
+                await logout();
               }}
             >
               <Text style={styles.signupButtonText}>Logout</Text>
@@ -120,81 +116,87 @@ export default function ProfileScreen({ navigation }) {
           </View>
         )}
 
-        {/* Stats Grid */}
-        <View style={styles.statsGrid}>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Orders</Text>
-            <Text style={styles.statValue}>42</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Karma Points</Text>
-            <Text style={styles.statValue}>1,250</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Sattva Tier</Text>
-            <Text style={styles.statValue}>Gold</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statLabel}>Reviews</Text>
-            <Text style={styles.statValue}>18</Text>
-          </View>
-        </View>
+        {user && (
+          <>
+            {/* Stats Grid */}
+            <View style={styles.statsGrid}>
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>Orders</Text>
+                <Text style={styles.statValue}>42</Text>
+              </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>Karma Points</Text>
+                <Text style={styles.statValue}>1,250</Text>
+              </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>Sattva Tier</Text>
+                <Text style={styles.statValue}>Gold</Text>
+              </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>Reviews</Text>
+                <Text style={styles.statValue}>18</Text>
+              </View>
+            </View>
 
-        {/* Order History */}
-        <View style={styles.sectionContainer}>
-          <View style={styles.sectionHeaderRow}>
-            <Text style={styles.sectionTitle}>Order History</Text>
-            <TouchableOpacity>
-              <Text style={styles.viewAllHistory}>View All History</Text>
-            </TouchableOpacity>
-          </View>
+            {/* Order History */}
+            <View style={styles.sectionContainer}>
+              <View style={styles.sectionHeaderRow}>
+                <Text style={styles.sectionTitle}>Order History</Text>
+                <TouchableOpacity>
+                  <Text style={styles.viewAllHistory}>View All History</Text>
+                </TouchableOpacity>
+              </View>
 
-          <View style={styles.ordersList}>
-            {ORDERS.map(order => (
-              <View key={order.id} style={[styles.orderCard, order.status === 'Cancelled' && styles.orderCardCancelled]}>
-                <Image source={{ uri: order.image }} style={styles.orderImage} />
-                <View style={styles.orderDetails}>
-                  <View style={styles.orderHeaderRow}>
-                    <Text style={styles.orderRestaurant}>{order.restaurant}</Text>
-                    <View style={[
-                      styles.statusBadge, 
-                      order.status === 'Cancelled' ? styles.statusBadgeCancelled : styles.statusBadgeDelivered
-                    ]}>
-                      <Text style={[
-                        styles.statusText,
-                        order.status === 'Cancelled' ? styles.statusTextCancelled : styles.statusTextDelivered
-                      ]}>{order.status}</Text>
+              <View style={styles.ordersList}>
+                {ORDERS.map(order => (
+                  <View key={order.id} style={[styles.orderCard, order.status === 'Cancelled' && styles.orderCardCancelled]}>
+                    <Image source={{ uri: order.image }} style={styles.orderImage} />
+                    <View style={styles.orderDetails}>
+                      <View style={styles.orderHeaderRow}>
+                        <Text style={styles.orderRestaurant}>{order.restaurant}</Text>
+                        <View style={[
+                          styles.statusBadge, 
+                          order.status === 'Cancelled' ? styles.statusBadgeCancelled : styles.statusBadgeDelivered
+                        ]}>
+                          <Text style={[
+                            styles.statusText,
+                            order.status === 'Cancelled' ? styles.statusTextCancelled : styles.statusTextDelivered
+                          ]}>{order.status}</Text>
+                        </View>
+                      </View>
+                      <Text style={styles.orderDate}>{order.date}</Text>
+                      <Text style={styles.orderItems}>{order.items}</Text>
+                    </View>
+                    <View style={styles.orderFooter}>
+                      <Text style={styles.orderPrice}>{order.price}</Text>
+                      <TouchableOpacity style={styles.reorderButton}>
+                        <Text style={styles.reorderText}>{order.status === 'Cancelled' ? 'View Details' : 'Reorder'}</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
-                  <Text style={styles.orderDate}>{order.date}</Text>
-                  <Text style={styles.orderItems}>{order.items}</Text>
-                </View>
-                <View style={styles.orderFooter}>
-                  <Text style={styles.orderPrice}>{order.price}</Text>
-                  <TouchableOpacity style={styles.reorderButton}>
-                    <Text style={styles.reorderText}>{order.status === 'Cancelled' ? 'View Details' : 'Reorder'}</Text>
-                  </TouchableOpacity>
-                </View>
+                ))}
               </View>
-            ))}
-          </View>
-        </View>
+            </View>
+          </>
+        )}
 
         {/* Settings Menu */}
-        <View style={styles.settingsContainer}>
-          <TouchableOpacity 
-            style={styles.settingItem}
-            onPress={() => navigation.navigate('AdminDashboard')}
-          >
-            <View style={styles.settingItemLeft}>
-              <View style={[styles.settingIconWrapper, { backgroundColor: theme.colors.primaryContainer + '20' }]}>
-                <MaterialIcons name="dashboard" size={20} color={theme.colors.primary} />
+        {role === 'admin' && (
+          <View style={styles.settingsContainer}>
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => navigation.navigate('AdminDashboard')}
+            >
+              <View style={styles.settingItemLeft}>
+                <View style={[styles.settingIconWrapper, { backgroundColor: theme.colors.primaryContainer + '20' }]}>
+                  <MaterialIcons name="dashboard" size={20} color={theme.colors.primary} />
+                </View>
+                <Text style={[styles.settingItemText, { fontWeight: 'bold' }]}>Admin Panel</Text>
               </View>
-              <Text style={[styles.settingItemText, { fontWeight: 'bold' }]}>Admin Panel</Text>
-            </View>
-            <MaterialIcons name="chevron-right" size={24} color="#ccc" />
-          </TouchableOpacity>
-        </View>
+              <MaterialIcons name="chevron-right" size={24} color="#ccc" />
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Heritage Journey */}
         <View style={styles.sectionContainer}>

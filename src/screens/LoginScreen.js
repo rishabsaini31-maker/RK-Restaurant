@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 const { width, height } = Dimensions.get('window');
 
 export default function LoginScreen({ navigation }) {
-  const { login, continueAsGuest } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -17,6 +17,7 @@ export default function LoginScreen({ navigation }) {
     try {
       setError(null);
       await login(email, password);
+      navigation.navigate('Main');
     } catch (err) {
       setError(err.message);
     }
@@ -87,7 +88,7 @@ export default function LoginScreen({ navigation }) {
 
           <TouchableOpacity 
             style={[styles.primaryButton, { backgroundColor: 'transparent', borderWidth: 1, borderColor: theme.colors.outline, marginTop: 12 }]} 
-            onPress={continueAsGuest}
+            onPress={() => navigation.goBack()}
           >
             <Text style={[styles.primaryButtonText, { color: theme.colors.onSurface }]}>Continue as Guest</Text>
           </TouchableOpacity>

@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isGuest, setIsGuest] = useState(false);
 
   // Initialize session and listen for auth changes
   useEffect(() => {
@@ -67,7 +66,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setLoading(true);
-    setIsGuest(false);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setLoading(false);
@@ -78,7 +76,6 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name) => {
     setLoading(true);
-    setIsGuest(false);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -95,21 +92,14 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     setLoading(true);
-    if (!isGuest) {
-      await supabase.auth.signOut();
-    }
+    await supabase.auth.signOut();
     setUser(null);
     setRole(null);
-    setIsGuest(false);
     setLoading(false);
   };
 
-  const continueAsGuest = () => {
-    setIsGuest(true);
-  };
-
   return (
-    <AuthContext.Provider value={{ user, role, loading, isGuest, login, signup, logout, continueAsGuest }}>
+    <AuthContext.Provider value={{ user, role, loading, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

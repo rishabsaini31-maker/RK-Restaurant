@@ -13,14 +13,14 @@ const APPETIZERS = [
     id: '1',
     name: 'Crispy Lotus Stem',
     desc: 'Thinly sliced lotus root tossed in a tangy honey-chili glaze with toasted sesame.',
-    price: '$14.00',
+    price: '₹450',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBkaOctLSrYdWNe6OuYKsOQcpyD6kIQKRMcGmwX0yJdsa4k74wliqxZ_FIeJolFtAdijxZuqzKRnLFtMCjFI5H5EWuOB5Ksdnmlp3DuEij64K3buOEYSHZB6D59NtNhB8myPdJaBzfFhQkD4uWDwxpicozeExyU_icatHLw9bpSF_xzbIiHyXULmca_zaF1B4wRXyFfUYPleVVHhDDwfjZhEnevKuWV0Byb2rUofRUhT786yMtLxMutfd5Lv1-MWreqrXzOPevk7MWv'
   },
   {
     id: '2',
     name: 'Truffle Broccoli',
     desc: 'Oven-roasted florets marinated in cardamom cream and white truffle essence.',
-    price: '$18.00',
+    price: '₹380',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA8AN_8cp8yzBLlRPJQikU1zv8W5LXMWM1FDmNFvEPdrDheXEowGX1ezVK1WJI_DvywkvevBTotUW1AzvUq5JmKBojQYa22iIn-EX90ji6vqknTLKHrDt5b6QFvUO9Ip7zs9siJhjQccjGVBDgpLTOAxrZ14nSriepMYppLuDiBqOkeH-DM3URN0Dz96exnS5IADV0C5rl3UD0Z7279p0fAY5Xnl5CWN40xErmfmwFOV6P0LdfwRf6DMbAI4Kwm5mq0CVDInivv8RUb'
   }
 ];
@@ -38,10 +38,12 @@ export default function MenuScreen({ navigation }) {
         </View>
         <View style={styles.headerRight}>
           <MaterialIcons name="search" size={24} color={theme.colors.onSurfaceVariant} style={{ marginRight: 16 }} />
-          <Image 
-            source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCw5_Rz8SHwVPExXUpm5pmB8Jhx0NT6r9yrfduOL1IocnycgJ_Jb5gVCAnnLhVXzpra5akp5qKE765vYW2TVQGfvw6Lr2g6hBc7bmI8yZov4D0eM0Z2WKTxMlJUGw_1XgyaVjgQVi7gTWvKPuXZJy4UH2SPFIjwa6ndJrawnvfgibQnbwimnX3lEB2NibLHjs4pO6ARPF9pKfIwP052WS4OPueQUYl6jQAUe8QyQabUEPAD6jHNPvBENxz0XnAIzsdqklaEyHmJ2AWo' }} 
-            style={styles.profileImage} 
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Image 
+              source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCw5_Rz8SHwVPExXUpm5pmB8Jhx0NT6r9yrfduOL1IocnycgJ_Jb5gVCAnnLhVXzpra5akp5qKE765vYW2TVQGfvw6Lr2g6hBc7bmI8yZov4D0eM0Z2WKTxMlJUGw_1XgyaVjgQVi7gTWvKPuXZJy4UH2SPFIjwa6ndJrawnvfgibQnbwimnX3lEB2NibLHjs4pO6ARPF9pKfIwP052WS4OPueQUYl6jQAUe8QyQabUEPAD6jHNPvBENxz0XnAIzsdqklaEyHmJ2AWo' }} 
+              style={styles.profileImage} 
+            />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -125,7 +127,7 @@ export default function MenuScreen({ navigation }) {
                   <Text style={styles.itemDesc}>{item.desc}</Text>
                   <View style={styles.itemFooter}>
                     <Text style={styles.itemPrice}>{item.price}</Text>
-                    <TouchableOpacity style={styles.addButton}>
+                    <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Cart')}>
                       <Text style={styles.addButtonText}>ADD</Text>
                     </TouchableOpacity>
                   </View>
@@ -160,7 +162,7 @@ export default function MenuScreen({ navigation }) {
               </Text>
               <View style={styles.itemFooter}>
                 <Text style={styles.signaturePrice}>$32.00</Text>
-                <TouchableOpacity style={styles.addButton}>
+                <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Cart')}>
                   <Text style={styles.addButtonText}>ADD TO CART</Text>
                 </TouchableOpacity>
               </View>
@@ -170,7 +172,7 @@ export default function MenuScreen({ navigation }) {
       </ScrollView>
 
       {/* Floating Action Button */}
-      <TouchableOpacity style={styles.fab}>
+      <TouchableOpacity style={styles.fab} onPress={() => navigation.navigate('Cart')}>
         <MaterialIcons name="shopping-bag" size={28} color={theme.colors.onPrimary} />
         <View style={styles.fabBadge}>
           <Text style={styles.fabBadgeText}>2</Text>

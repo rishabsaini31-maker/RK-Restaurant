@@ -58,7 +58,7 @@ function MainTabNavigator() {
 }
 
 export default function AppNavigator() {
-  const { user, role, loading, isGuest } = useContext(AuthContext);
+  const { user, role, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
@@ -71,13 +71,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {(!user && !isGuest) ? (
-          // Auth Stack
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Signup" component={SignupScreen} />
-          </>
-        ) : (role === 'admin' && !isGuest) ? (
+        {role === 'admin' ? (
           // Admin Stack
           <>
             <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
@@ -91,6 +85,8 @@ export default function AppNavigator() {
             <Stack.Screen name="Main" component={MainTabNavigator} />
             <Stack.Screen name="DishDetails" component={DishDetailsScreen} />
             <Stack.Screen name="OrderPreview" component={OrderPreviewScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
           </>
         )}
       </Stack.Navigator>
