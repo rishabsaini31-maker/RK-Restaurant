@@ -5,38 +5,42 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../theme';
 import { useAuth } from '../context/AuthContext';
 
-const ORDERS = [
-  {
-    id: '1',
-    restaurant: 'The Heritage Grove',
-    status: 'Delivered',
-    date: 'Oct 24, 2023 • 8:15 PM',
-    items: 'Smoked Paneer Tikka, Truffle Dal Makhani',
-    price: '₹1,850',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUoMwhUBd4cQhGWkc3k3XZSyHIuBEqKnI5iSCDnm-zVP33-MCVEoK2TArBRnHv_PoGXwDaPsbpMeokg6V27oaGUop8O_JTqgXwmota3Cbm53wVnbEm_Rse5WLS9QCvMoyVrBZGI6vyl3RVKIUig9bMzxFosjoVjieGJC3qNo5mhLhi0BzVh0eSRYamLNxNSJI8vvAIDGvyznRJBS8GyJbAeTVKkaqaweSFPZ_wNyjpr1M2sOZ4VNB8_NXqqsA8I7jlbHKBsNhBpiE_'
-  },
-  {
-    id: '2',
-    restaurant: 'Prakriti Bistro',
-    status: 'Delivered',
-    date: 'Oct 18, 2023 • 1:30 PM',
-    items: 'Avocado Zen Bowl, Hibiscus Cooler',
-    price: '₹950',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjDxkrz9iPgB45x1ezzE-zDokcgoQxcqMe9WSnxIYUTZENR5nJm9eyVRsBj8y7xH1DdqgubsaZaA07sJBkvVqiocprf2spAOe848XsJoqB1bEW0BUzUoRfvFf3Fyx_P4EipZYmXudTa-nsXYoPg-QMQFNg2mTNwKmdD6J5YX8gRbIKdGSKjfXtTf2x88qsU8aPFdtJLgzBCelSOuhi6uX7IzKa66TisUHYxS7Eie3L8NEYfglGCrKjMybf4yoKSPHEqu7qeAZh0OuS'
-  },
-  {
-    id: '3',
-    restaurant: 'Amrita Kitchen',
-    status: 'Cancelled',
-    date: 'Oct 12, 2023 • 9:00 PM',
-    items: 'Wild Mushroom Tart, Elderflower Spritz',
-    price: '₹1,200',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAz-OwQCe4vXeddG97QgWSuDj96ukxZRTynXstVL71S7fs7c4XvlWIqCLYlkMrQPS79XsxhCopxNKD0nuIi5UdCJ_vJeu9Vdk3xiPnue6xllIMVCvSg257EThbY8CuGds8wmvEAMSBIO-0R1Q9KKm-4EuydmQvtn49aD42P_VizMsAcGay_z8NR7kEtzxzczYM7gUuJa2lcF607mwqL7IR74a4Xxk9tZx-sOvpzJegNieNd6XbUS7m7l2U-iE6VL7_s_XciChXK40FW'
-  }
-];
+import { supabase } from '../services/supabase';
 
 export default function ProfileScreen({ navigation }) {
-  const { user, role, logout } = useAuth();
+  const { user, role, profileName, logout } = useAuth();
+  const [orders, setOrders] = React.useState([]);
+  const [reviewsCount, setReviewsCount] = React.useState(0);
+  const [isLoadingStats, setIsLoadingStats] = React.useState(true);
+
+  React.useEffect(() => {
+    if (user) {
+      const fetchProfileData = async () => {
+        setIsLoadingStats(true);
+        try {
+          const { data: ordersData } = await supabase
+            .from('orders')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false });
+          
+          if (ordersData) setOrders(ordersData);
+
+          const { count: revCount } = await supabase
+            .from('reviews')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id);
+            
+          if (revCount !== null) setReviewsCount(revCount);
+        } catch (e) {
+          console.log("Tables might not exist yet:", e);
+        } finally {
+          setIsLoadingStats(false);
+        }
+      };
+      fetchProfileData();
+    }
+  }, [user]);
   
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -73,7 +77,7 @@ export default function ProfileScreen({ navigation }) {
           </View>
           
           <View style={styles.profileDetails}>
-            <Text style={styles.profileName}>{user ? user.email.split('@')[0] : 'Guest'}</Text>
+            <Text style={styles.profileName}>{user ? (profileName || user.email.split('@')[0]) : 'Guest'}</Text>
             <View style={styles.memberStatus}>
               <MaterialIcons name="verified" size={18} color={theme.colors.primary} style={{ marginRight: 4 }} />
               <Text style={styles.memberText}>{user ? 'Elite Connoisseur Member' : 'Welcome to our sanctuary'}</Text>
@@ -122,11 +126,7 @@ export default function ProfileScreen({ navigation }) {
             <View style={styles.statsGrid}>
               <View style={styles.statBox}>
                 <Text style={styles.statLabel}>Orders</Text>
-                <Text style={styles.statValue}>42</Text>
-              </View>
-              <View style={styles.statBox}>
-                <Text style={styles.statLabel}>Karma Points</Text>
-                <Text style={styles.statValue}>1,250</Text>
+                <Text style={styles.statValue}>{isLoadingStats ? '-' : orders.length}</Text>
               </View>
               <View style={styles.statBox}>
                 <Text style={styles.statLabel}>Sattva Tier</Text>
@@ -134,7 +134,7 @@ export default function ProfileScreen({ navigation }) {
               </View>
               <View style={styles.statBox}>
                 <Text style={styles.statLabel}>Reviews</Text>
-                <Text style={styles.statValue}>18</Text>
+                <Text style={styles.statValue}>{isLoadingStats ? '-' : reviewsCount}</Text>
               </View>
             </View>
 
@@ -148,33 +148,38 @@ export default function ProfileScreen({ navigation }) {
               </View>
 
               <View style={styles.ordersList}>
-                {ORDERS.map(order => (
-                  <View key={order.id} style={[styles.orderCard, order.status === 'Cancelled' && styles.orderCardCancelled]}>
-                    <Image source={{ uri: order.image }} style={styles.orderImage} />
-                    <View style={styles.orderDetails}>
-                      <View style={styles.orderHeaderRow}>
-                        <Text style={styles.orderRestaurant}>{order.restaurant}</Text>
-                        <View style={[
-                          styles.statusBadge, 
-                          order.status === 'Cancelled' ? styles.statusBadgeCancelled : styles.statusBadgeDelivered
-                        ]}>
-                          <Text style={[
-                            styles.statusText,
-                            order.status === 'Cancelled' ? styles.statusTextCancelled : styles.statusTextDelivered
-                          ]}>{order.status}</Text>
+                {isLoadingStats ? (
+                  <Text style={{ textAlign: 'center', marginTop: 20, color: theme.colors.outlineVariant }}>Loading history...</Text>
+                ) : orders.length === 0 ? (
+                  <Text style={{ textAlign: 'center', marginTop: 20, color: theme.colors.outlineVariant }}>No orders yet. Discover our pure flavors!</Text>
+                ) : (
+                  orders.map(order => (
+                    <View key={order.id} style={[styles.orderCard, order.status === 'Cancelled' && styles.orderCardCancelled]}>
+                      <View style={styles.orderDetails}>
+                        <View style={styles.orderHeaderRow}>
+                          <Text style={styles.orderRestaurant}>RK Restaurant</Text>
+                          <View style={[
+                            styles.statusBadge, 
+                            order.status === 'Cancelled' ? styles.statusBadgeCancelled : styles.statusBadgeDelivered
+                          ]}>
+                            <Text style={[
+                              styles.statusText,
+                              order.status === 'Cancelled' ? styles.statusTextCancelled : styles.statusTextDelivered
+                            ]}>{order.status || 'Processing'}</Text>
+                          </View>
                         </View>
+                        <Text style={styles.orderDate}>{new Date(order.created_at).toLocaleDateString()}</Text>
+                        <Text style={styles.orderItems}>{order.items_string || 'Order items'}</Text>
                       </View>
-                      <Text style={styles.orderDate}>{order.date}</Text>
-                      <Text style={styles.orderItems}>{order.items}</Text>
+                      <View style={styles.orderFooter}>
+                        <Text style={styles.orderPrice}>₹{order.total_amount || 0}</Text>
+                        <TouchableOpacity style={styles.reorderButton}>
+                          <Text style={styles.reorderText}>{order.status === 'Cancelled' ? 'View Details' : 'Reorder'}</Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                    <View style={styles.orderFooter}>
-                      <Text style={styles.orderPrice}>{order.price}</Text>
-                      <TouchableOpacity style={styles.reorderButton}>
-                        <Text style={styles.reorderText}>{order.status === 'Cancelled' ? 'View Details' : 'Reorder'}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ))}
+                  ))
+                )}
               </View>
             </View>
           </>
@@ -386,7 +391,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   statBox: {
-    width: '48%',
+    width: '31%',
     backgroundColor: '#ffffff',
     padding: theme.spacing.md,
     borderRadius: 20,

@@ -8,7 +8,7 @@ import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 export const fetchCategories = async () => {
   const { data, error } = await supabase
     .from('categories')
-    .select('id, name, slug');
+    .select('id, name');
 
   if (error) {
     console.error('Error fetching categories:', error);
@@ -26,7 +26,7 @@ export const fetchCategories = async () => {
 export const fetchProducts = async () => {
   const { data, error } = await supabase
     .from('products')
-    .select('id, name, price, description, image_url, category_id');
+    .select('id, name, price, image_url, category_id');
 
   if (error) {
     console.error('Error fetching products:', error);
@@ -74,7 +74,7 @@ export const fetchPaginatedProducts = async ({ pageParam = 0, queryKey }) => {
 
   let query = supabase
     .from('products')
-    .select('id, name, price, description, image_url, category_id');
+    .select('id, name, price, image_url, category_id');
 
   if (categoryId) {
     query = query.eq('category_id', categoryId);

@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+  const [profileName, setProfileName] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Initialize session and listen for auth changes
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setUser(null);
         setRole(null);
+        setProfileName(null);
         setLoading(false);
       }
     });
@@ -46,19 +48,22 @@ export const AuthProvider = ({ children }) => {
       // Fetch the role from the profiles table
       const { data, error } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role, name')
         .eq('id', currentUser.id)
-        .single();
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching profile role:', error.message);
         setRole('customer'); // fallback
+        setProfileName(null);
       } else if (data) {
         setRole(data.role || 'customer');
+        setProfileName(data.name || null);
       }
     } catch (err) {
       console.error('Unexpected error fetching role:', err);
       setRole('customer');
+      setProfileName(null);
     } finally {
       setLoading(false);
     }
@@ -70,6 +75,9 @@ export const AuthProvider = ({ children }) => {
     if (error) {
       setLoading(false);
       throw error;
+    }
+    if (data?.user) {
+      await fetchAndSetUserRole(data.user);
     }
     return data;
   };
@@ -87,6 +95,30 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       throw error;
     }
+
+    // Supabase security feature: if the email already exists, it returns a fake user with an empty identities array.
+    if (data?.user && data.user.identities && data.user.identities.length === 0) {
+      setLoading(false);
+      throw new Error("This email already exists. Please try to login instead.");
+    }
+
+    if (data?.user) {
+      // Create a profile record so you can see the user in your database's 'profiles' table!
+      const { error: profileError } = await supabase.from('profiles').insert([
+        { 
+          id: data.user.id, 
+          email: email,
+          name: name,
+          role: 'customer' 
+        }
+      ]);
+      
+      if (profileError) {
+        console.error("Failed to create profile record:", profileError);
+      }
+
+      await fetchAndSetUserRole(data.user);
+    }
     return data;
   };
 
@@ -95,11 +127,12 @@ export const AuthProvider = ({ children }) => {
     await supabase.auth.signOut();
     setUser(null);
     setRole(null);
+    setProfileName(null);
     setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, role, profileName, loading, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

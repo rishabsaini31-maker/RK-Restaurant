@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Dimensions, ScrollView, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Dimensions, ScrollView, Platform, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../theme';
@@ -11,15 +11,26 @@ export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      Alert.alert("Login Failed", "Please enter both email and password");
+      return;
+    }
     try {
       setError(null);
-      await login(email, password);
+      setIsLoading(true);
+      await login(email.trim(), password);
       navigation.navigate('Main');
     } catch (err) {
       setError(err.message);
+      Alert.alert("Login Failed", err.message || "Invalid login credentials.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,12 +74,12 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input} 
                 placeholder="••••••••"
                 placeholderTextColor={theme.colors.outline}
-                secureTextEntry
+                secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword}
               />
-              <TouchableOpacity style={styles.eyeIcon}>
-                <MaterialIcons name="visibility" size={20} color={theme.colors.outline} />
+              <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
+                <MaterialIcons name={showPassword ? "visibility" : "visibility-off"} size={20} color={theme.colors.outline} />
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.forgotPassword}>
@@ -79,13 +90,20 @@ export default function LoginScreen({ navigation }) {
           {error && <Text style={{ color: theme.colors.error, marginBottom: 16, textAlign: 'center' }}>{error}</Text>}
 
           <TouchableOpacity 
-            style={styles.primaryButton} 
+            style={[styles.primaryButton, isLoading && { opacity: 0.7 }]} 
             onPress={handleLogin}
+            disabled={isLoading}
+            activeOpacity={0.7}
           >
-            <Text style={styles.primaryButtonText}>Login to Sanctuary</Text>
-            <MaterialIcons name="arrow-forward" size={18} color="#ffffff" />
+            {isLoading ? (
+              <ActivityIndicator color="#ffffff" size="small" />
+            ) : (
+              <>
+                <Text style={styles.primaryButtonText}>Login </Text>
+                <MaterialIcons name="arrow-forward" size={18} color="#ffffff" />
+              </>
+            )}
           </TouchableOpacity>
-
           <TouchableOpacity 
             style={[styles.primaryButton, { backgroundColor: 'transparent', borderWidth: 1, borderColor: theme.colors.outline, marginTop: 12 }]} 
             onPress={() => navigation.goBack()}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Platform, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../theme';
@@ -12,18 +12,31 @@ export default function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async () => {
+    if (!name || !email || !password) {
+      setError("Please fill in all fields.");
+      Alert.alert("Signup Failed", "Please fill in all fields.");
+      return;
+    }
     if (!isChecked) {
       setError("Please agree to the Terms and Conditions.");
+      Alert.alert("Signup Failed", "Please agree to the Terms and Conditions.");
       return;
     }
     try {
       setError(null);
-      await signup(email, password, name);
+      setIsLoading(true);
+      await signup(email.trim(), password, name.trim());
+      navigation.navigate('Main');
     } catch (err) {
       setError(err.message);
+      Alert.alert("Signup Failed", err.message || "An error occurred during signup.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,12 +121,12 @@ export default function SignupScreen({ navigation }) {
                   style={styles.input} 
                   placeholder="••••••••"
                   placeholderTextColor={theme.colors.outlineVariant}
-                  secureTextEntry
+                  secureTextEntry={!showPassword}
                   value={password}
                   onChangeText={setPassword}
                 />
-                <TouchableOpacity>
-                  <MaterialIcons name="visibility" size={20} color={theme.colors.outlineVariant} />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ padding: 8 }}>
+                  <MaterialIcons name={showPassword ? "visibility" : "visibility-off"} size={20} color={theme.colors.outlineVariant} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -132,11 +145,19 @@ export default function SignupScreen({ navigation }) {
 
             {/* Submit Button */}
             <TouchableOpacity 
-              style={styles.primaryButton}
+              style={[styles.primaryButton, isLoading && { opacity: 0.7 }]}
               onPress={handleSignup}
+              disabled={isLoading}
+              activeOpacity={0.7}
             >
-              <Text style={styles.primaryButtonText}>Sign Up</Text>
-              <MaterialIcons name="arrow-forward" size={18} color="#ffffff" />
+              {isLoading ? (
+                <ActivityIndicator color="#ffffff" size="small" />
+              ) : (
+                <>
+                  <Text style={styles.primaryButtonText}>Sign Up</Text>
+                  <MaterialIcons name="arrow-forward" size={18} color="#ffffff" />
+                </>
+              )}
             </TouchableOpacity>
 
             <View style={styles.dividerContainer}>
@@ -233,12 +254,12 @@ const styles = StyleSheet.create({
   dash: {
     width: 40,
     height: 1,
-    backgroundColor: theme.colors.primaryContainer,
+    backgroundColor: theme.colors.secondary,
     marginRight: 8,
   },
   subtitleText: {
     ...theme.typography.labelSmall,
-    color: theme.colors.primaryContainer,
+    color: theme.colors.secondary,
     letterSpacing: 2,
   },
   titleText: {
@@ -305,7 +326,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   primaryButton: {
-    backgroundColor: theme.colors.primaryContainer,
+    backgroundColor: theme.colors.secondary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -342,7 +363,7 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     borderWidth: 1,
-    borderColor: theme.colors.primaryContainer,
+    borderColor: theme.colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 16,
@@ -350,7 +371,7 @@ const styles = StyleSheet.create({
   },
   secondaryButtonText: {
     ...theme.typography.bodyMedium,
-    color: theme.colors.primaryContainer,
+    color: theme.colors.secondary,
   },
   vegIndicator: {
     flexDirection: 'row',
