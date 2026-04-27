@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../theme';
 import { useCart } from '../context/CartContext';
-import { usePaginatedProducts, useCategories } from '../api/menu';
+import { usePaginatedProducts } from '../api/menu';
 
 /**
  * Custom Debounce Hook to prevent rapid API calls or repeated renders.
@@ -31,11 +31,18 @@ function useDebounce(value, delay) {
 
 /**
  * Memoized Item Component:
- * Prevents re-rendering of ALL items when just one item changes.
+ * Prevents re-rendering of ALL items when just one item changes or the parent state changes.
+ * Essential for FlatList performance with large datasets.
  */
 const ProductItem = React.memo(({ item, onAdd }) => {
   return (
     <View style={styles.itemCard}>
+      {/* 
+        Image Optimization:
+        In production, ensure you use a service (like Supabase storage transformations or an external CDN)
+        to request specifically sized webp versions. (e.g., ?width=300&quality=80) 
+        Here we use `fadeDuration` and standard cache policy.
+      */}
       {item.image_url && (
         <Image 
           source={{ uri: item.image_url, cache: 'force-cache' }} 
@@ -60,42 +67,36 @@ const ProductItem = React.memo(({ item, onAdd }) => {
   );
 }, (prevProps, nextProps) => prevProps.item.id === nextProps.item.id);
 
-export default function MenuScreen({ navigation }) {
+export default function HighTrafficMenuExample({ navigation }) {
   const { addToCart, totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
   
   // Debounce the search input to avoid filtering rapidly on every keystroke
   const debouncedSearch = useDebounce(searchQuery, 300);
 
-  const { 
-    data: categoriesData = [], 
-    isLoading: isCategoriesLoading 
-  } = useCategories();
-
   // Use the paginated infinite query for handling large datasets in batches
-  // Pass activeCategoryId so the query runs differently when category changes
   const { 
     data, 
-    isLoading: isProductsLoading, 
+    isLoading, 
     isError, 
     error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage
-  } = usePaginatedProducts(activeCategoryId);
+  } = usePaginatedProducts();
 
   // Flatten the pages array returned by useInfiniteQuery into a single array
   const allProducts = useMemo(() => {
     return data ? data.pages.flatMap(page => page.data) : [];
   }, [data]);
 
-  // Filter based on the debounced search locally
+  // Filter based on the debounced search
   const displayedProducts = useMemo(() => {
     if (!debouncedSearch) return allProducts;
     return allProducts.filter(p => p.name.toLowerCase().includes(debouncedSearch.toLowerCase()));
   }, [allProducts, debouncedSearch]);
 
+  // useCallback prevents recreating the function on every render, preserving the React.memo optimization
   const handleAddToCart = useCallback((item) => {
     addToCart(item);
   }, [addToCart]);
@@ -109,44 +110,7 @@ export default function MenuScreen({ navigation }) {
     );
   };
 
-  const renderHeader = () => (
-    <View style={styles.listHeader}>
-      <Text style={styles.headerTitle}>Explore Menu</Text>
-      <TextInput 
-        style={styles.searchInput}
-        placeholder="Search for your favorite dishes..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      {categoriesData && categoriesData.length > 0 && (
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={[{ id: null, name: 'All' }, ...categoriesData]}
-          keyExtractor={(item) => item.id ? item.id.toString() : 'all'}
-          contentContainerStyle={styles.categoriesContainer}
-          renderItem={({ item }) => (
-            <TouchableOpacity 
-              onPress={() => setActiveCategoryId(item.id)}
-              style={[
-                styles.categoryChip, 
-                activeCategoryId === item.id ? styles.categoryChipActive : styles.categoryChipInactive
-              ]}
-            >
-              <Text style={[
-                styles.categoryText,
-                activeCategoryId === item.id ? styles.categoryTextActive : styles.categoryTextInactive
-              ]}>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      )}
-    </View>
-  );
-
-  const isLoading = isCategoriesLoading || isProductsLoading;
-
-  if (isLoading && allProducts.length === 0) {
+  if (isLoading) {
     return (
       <SafeAreaView style={[styles.safeArea, styles.centered]}>
         <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -166,22 +130,26 @@ export default function MenuScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.topBar}>
-        <View style={styles.headerLeft}>
-          <MaterialIcons name="eco" size={28} color={theme.colors.primary} />
-          <Text style={styles.topBarTitle}>RK Restaurant</Text>
-        </View>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Image 
-            source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCw5_Rz8SHwVPExXUpm5pmB8Jhx0NT6r9yrfduOL1IocnycgJ_Jb5gVCAnnLhVXzpra5akp5qKE765vYW2TVQGfvw6Lr2g6hBc7bmI8yZov4D0eM0Z2WKTxMlJUGw_1XgyaVjgQVi7gTWvKPuXZJy4UH2SPFIjwa6ndJrawnvfgibQnbwimnX3lEB2NibLHjs4pO6ARPF9pKfIwP052WS4OPueQUYl6jQAUe8QyQabUEPAD6jHNPvBENxz0XnAIzsdqklaEyHmJ2AWo' }} 
-            style={styles.profileImage} 
-          />
-        </TouchableOpacity>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>High Performance Menu</Text>
+        <TextInput 
+          style={styles.searchInput}
+          placeholder="Search products..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
       </View>
 
+      {/* 
+        Optimized FlatList Setup:
+        - keyExtractor: Unique key to avoid re-renders
+        - initialNumToRender: Small number to render initial items instantly
+        - maxToRenderPerBatch: Batches render calculations
+        - windowSize: Keeps memory low by unmounting views far off-screen
+        - onEndReached: Triggers the infinite scroll pagination
+      */}
       <FlatList
         data={displayedProducts}
-        ListHeaderComponent={renderHeader}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <ProductItem item={item} onAdd={handleAddToCart} />}
         contentContainerStyle={styles.listContainer}
@@ -196,12 +164,6 @@ export default function MenuScreen({ navigation }) {
         }}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
-        ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <MaterialIcons name="restaurant-menu" size={48} color={theme.colors.outline} />
-            <Text style={styles.emptyStateText}>No dishes available.</Text>
-          </View>
-        }
       />
 
       {totalItems > 0 && (
@@ -221,33 +183,9 @@ const styles = StyleSheet.create({
   centered: { justifyContent: 'center', alignItems: 'center' },
   loadingText: { marginTop: 16, color: theme.colors.onSurfaceVariant },
   errorText: { marginTop: 16, color: theme.colors.error },
-  
-  topBar: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    paddingHorizontal: theme.spacing.md,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    elevation: 2 
-  },
-  headerLeft: { flexDirection: 'row', alignItems: 'center' },
-  topBarTitle: { ...theme.typography.h2, fontSize: 20, color: theme.colors.primary, marginLeft: 8 },
-  profileImage: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, borderColor: theme.colors.outline },
-
-  listHeader: { marginBottom: 16 },
-  headerTitle: { ...theme.typography.h2, fontSize: 22, color: theme.colors.onSurface, marginBottom: 12 },
-  searchInput: { backgroundColor: '#f1f1f1', padding: 12, borderRadius: 8, fontSize: 16, marginBottom: 16 },
-  
-  categoriesContainer: { paddingVertical: 4, gap: theme.spacing.sm },
-  categoryChip: { paddingHorizontal: 20, paddingVertical: 8, borderRadius: 20, marginRight: 8 },
-  categoryChipActive: { backgroundColor: theme.colors.primary },
-  categoryChipInactive: { backgroundColor: '#fee3d8' },
-  categoryText: { ...theme.typography.labelSmall },
-  categoryTextActive: { color: theme.colors.onPrimary },
-  categoryTextInactive: { color: theme.colors.onSurfaceVariant },
-
+  header: { padding: theme.spacing.md, backgroundColor: '#fff', elevation: 2 },
+  headerTitle: { ...theme.typography.h2, fontSize: 22, color: theme.colors.primary, marginBottom: 12 },
+  searchInput: { backgroundColor: '#f1f1f1', padding: 12, borderRadius: 8, fontSize: 16 },
   listContainer: { padding: theme.spacing.md },
   itemCard: { backgroundColor: '#ffffff', borderRadius: 16, overflow: 'hidden', ...theme.shadows.level1, marginBottom: 16, elevation: 2 },
   itemImage: { width: '100%', height: 160, resizeMode: 'cover' },
@@ -261,9 +199,6 @@ const styles = StyleSheet.create({
   itemPrice: { ...theme.typography.h2, fontSize: 18, color: theme.colors.primary },
   addButton: { width: 32, height: 32, borderRadius: 16, backgroundColor: theme.colors.primary, alignItems: 'center', justifyContent: 'center' },
   footerLoader: { paddingVertical: 20, alignItems: 'center', height: 100 },
-  emptyState: { alignItems: 'center', marginTop: 40 },
-  emptyStateText: { marginTop: 16, color: theme.colors.onSurfaceVariant },
-  
   fab: { position: 'absolute', bottom: 24, right: 24, width: 64, height: 64, borderRadius: 32, backgroundColor: theme.colors.primary, alignItems: 'center', justifyContent: 'center', ...theme.shadows.level2 },
   fabBadge: { position: 'absolute', top: 0, right: 0, width: 24, height: 24, borderRadius: 12, backgroundColor: '#3d2d26', borderWidth: 2, borderColor: theme.colors.background, alignItems: 'center', justifyContent: 'center' },
   fabBadgeText: { color: theme.colors.background, fontSize: 10, fontWeight: 'bold' }

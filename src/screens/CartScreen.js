@@ -1,40 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Linking, Alert, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../theme';
 
-const CART_ITEMS = [
-  {
-    id: '1',
-    name: 'Truffle Sage Ravioli',
-    desc: 'Handmade pasta, brown butter, crispy sage',
-    price: '₹ 850',
-    qty: 1,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAJgJgM0UJHm4RZUNLVVgv9xtO4Hiaplc5kn9NZvGdSUXtwOn1KDuTU5HFFj4uVpuVGFprGm5q9-1A7-4hpPhfnXvPz9GR-cYUQ-a2AZ95ItGu5GcBmNV-Nq3bmH1ANdrX_6yVfBI4R5DOpub5wfWGTzapJ9q15jUubDTNM1m27zOJappPKToq-GMRA_riZ6xQnrhdqLhYggKgVSMlK23uGFGLEU9g2BXJyVE8j8xps1N7epa1uwS5y2zL6IsjayEDlCjPLQCAwI2QJ'
-  },
-  {
-    id: '2',
-    name: 'Heirloom Garden Salad',
-    desc: 'Organic tomatoes, pine nuts, basil emulsion',
-    price: '₹ 520',
-    qty: 2,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXI4kO8pw6pfsZEYZjIWHun_XNN1vcrx68se7xIo1z6UOKSLi924NicwlUW9I0pRfDov6jXta5T9RZQ2dBopBru0tMV-TP5LRGOpWp-u8rDiptvX4R0Lc5XwTwR8qfPXlAMqZEFLrBVhKSPB3z-igv9Qn5-TXF3jXOAIutTfmpj4kX7o5G0gAW-G3YtYGRjCYBh-PyQldLqrZ-uKFz78ijYBW3Ko9aypTwKa2_MdzjmXZBwMWoS_RgNvNxB5Wg9f_NbRrweCIj7OcF'
-  }
-];
+import { useCart } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
 
 export default function CartScreen({ navigation }) {
+  const { cartItems, updateQuantity, subtotal, taxes, deliveryFee, total, clearCart } = useCart();
+  const { user } = useContext(AuthContext);
   const [customerName, setCustomerName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [address, setAddress] = useState('');
 
   const handleCheckout = () => {
+    if (!user) {
+      Alert.alert(
+        "Login Required", 
+        "Please login to proceed with placing your order.",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Login", onPress: () => navigation.navigate("Login") }
+        ]
+      );
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      Alert.alert("Cart is Empty", "Please add some items to your cart before proceeding.");
+      return;
+    }
+
     if (!customerName.trim() || !contactNumber.trim() || !address.trim()) {
       Alert.alert("Missing Details", "Please fill in your name, contact number, and delivery address to proceed.");
       return;
     }
 
-    const phoneNumber = '+919876543210'; // Restaurant's WhatsApp number
+    const itemsString = cartItems.map(item => `${item.qty}x ${item.name} - ₹${item.numericPrice * item.qty}`).join('\n');
+
+    const phoneNumber = '+918080380261'; // Restaurant's WhatsApp number
     const message = `Hello RK Restaurant,
 
 I would like to place an order!
@@ -45,14 +50,13 @@ Contact: ${contactNumber}
 Address: ${address}
 
 *Order Items:*
-1x Truffle Sage Ravioli - ₹850
-2x Heirloom Garden Salad - ₹520
+${itemsString}
 
 *Bill Summary:*
-Subtotal: ₹1,890
-GST & Taxes: ₹94.50
-Delivery: ₹60
-*Total: ₹2,044.50*
+Subtotal: ₹${subtotal.toFixed(2)}
+GST & Taxes: ₹${taxes.toFixed(2)}
+Delivery: ₹${deliveryFee.toFixed(2)}
+*Total: ₹${total.toFixed(2)}*
 
 Please confirm my order.`;
     
@@ -97,7 +101,7 @@ Please confirm my order.`;
 
           {/* Item List */}
           <View style={styles.itemList}>
-            {CART_ITEMS.map(item => (
+            {cartItems.map(item => (
               <View key={item.id} style={styles.cartItem}>
                 <View style={styles.itemImageContainer}>
                   <Image source={{ uri: item.image }} style={styles.itemImage} />
@@ -112,13 +116,13 @@ Please confirm my order.`;
                   </View>
                   
                   <View style={styles.itemFooter}>
-                    <Text style={styles.itemPrice}>{item.price}</Text>
+                    <Text style={styles.itemPrice}>₹{item.numericPrice * item.qty}</Text>
                     <View style={styles.quantityControl}>
-                      <TouchableOpacity style={styles.qtyButton}>
+                      <TouchableOpacity style={styles.qtyButton} onPress={() => updateQuantity(item.id, -1)}>
                         <MaterialIcons name="remove" size={16} color={theme.colors.primary} />
                       </TouchableOpacity>
                       <Text style={styles.qtyText}>{item.qty}</Text>
-                      <TouchableOpacity style={styles.qtyButton}>
+                      <TouchableOpacity style={styles.qtyButton} onPress={() => updateQuantity(item.id, 1)}>
                         <MaterialIcons name="add" size={16} color={theme.colors.primary} />
                       </TouchableOpacity>
                     </View>
@@ -173,23 +177,23 @@ Please confirm my order.`;
           <View style={styles.summaryCard}>
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Subtotal</Text>
-              <Text style={styles.summaryValue}>₹ 1,890</Text>
+              <Text style={styles.summaryValue}>₹ {subtotal.toFixed(2)}</Text>
             </View>
             <View style={styles.divider} />
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>GST & Taxes</Text>
-              <Text style={styles.summaryValue}>₹ 94.50</Text>
+              <Text style={styles.summaryValue}>₹ {taxes.toFixed(2)}</Text>
             </View>
             <View style={styles.divider} />
             <View style={styles.summaryRow}>
               <Text style={styles.summaryLabel}>Delivery Excellence</Text>
-              <Text style={styles.summaryValue}>₹ 60</Text>
+              <Text style={styles.summaryValue}>₹ {deliveryFee.toFixed(2)}</Text>
             </View>
             
             <View style={styles.totalSection}>
               <View>
                 <Text style={styles.totalLabel}>TOTAL AMOUNT</Text>
-                <Text style={styles.totalAmount}>₹ 2,044.50</Text>
+                <Text style={styles.totalAmount}>₹ {total.toFixed(2)}</Text>
               </View>
               <View style={styles.guaranteeBadge}>
                 <MaterialIcons name="verified-user" size={16} color={theme.colors.secondary} />

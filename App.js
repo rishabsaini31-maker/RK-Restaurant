@@ -15,6 +15,11 @@ import {
 import AppNavigator from './src/navigation/AppNavigator';
 
 import { AuthProvider } from './src/context/AuthContext';
+import { CartProvider } from './src/context/CartContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Create a client for React Query caching
+const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,9 +40,13 @@ export default function App() {
   }
 
   return (
-    <AuthProvider>
-      <AppNavigator />
-      <StatusBar style="auto" />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CartProvider>
+          <AppNavigator />
+          <StatusBar style="auto" />
+        </CartProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
