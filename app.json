@@ -4,11 +4,11 @@
     "slug": "rk-restaurant",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -34,6 +34,7 @@
         "projectId": "42b99f0b-b3ad-48f4-8307-a757eab5d345"
       }
     },
-    "owner": "scs-technologys-organization"
+    "owner": "scs-technologys-organization",
+    "runtimeVersion": "1.0.0",
   }
 }
